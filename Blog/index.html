@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Jiangshan&#039;s Personal Website</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Jiangshan&#039;s Personal Website"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jiangshan&#039;s Personal Website"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta property="og:type" content="blog"><meta property="og:title" content="Jiangshan&#039;s Personal Website"><meta property="og:url" content="http://example.com/"><meta property="og:site_name" content="Jiangshan&#039;s Personal Website"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://example.com/img/og_image.png"><meta property="article:author" content="Jiangshan Gong"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://example.com/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com"},"headline":"Jiangshan Gong","image":["http://example.com/img/og_image.png"],"author":{"@type":"Person","name":"Jiangshan Gong"},"publisher":{"@type":"Organization","name":"Jiangshan's Personal Website","logo":{"@type":"ImageObject","url":"http://example.com/img/logo.svg"}},"description":"This is Jiangshan Gong&#39;s personal website"}</script><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Jiangshan&#039;s Personal Website" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item is-active" href="/Blog">Blog</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/About">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2023-08-11T04:08:03.615Z" title="8/11/2023, 12:08:03 PM">2023-08-11</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-08-11T04:08:03.615Z" title="8/11/2023, 12:08:03 PM">2023-08-11</time></span><span class="level-item">a minute read (About 123 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/08/11/hello-world/">Hello World</a></p><div class="content"><p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2023-02-01T17:03:03.000Z" title="2/2/2023, 1:03:03 AM">2023-02-02</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-08-11T11:17:55.879Z" title="8/11/2023, 7:17:55 PM">2023-08-11</time></span><span class="level-item"><a class="link-muted" href="/categories/cs-learning-life/">cs_learning life</a></span><span class="level-item">2 minutes read (About 236 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/02/02/2022-08-31-Long_Time_No_See/">Long Time No See and some bash codes tips</a></p><div class="content"><p>Hey there, it has been a month since I updated my posts. In the past month I struggled with all those troublesome stuffs emerging at the beginning of the campus life in UIUC.<br><del>Actually I am still struggling with them now</del><br>So much for the complaints, I’ve enrolled in the cs124 honor course besides the cs124. These two classes are in fact not correlated at all. The cs124 honor is mainly held by a group of senior students.<br>And no credit hour is given for this course. What I can get is, basically, well, honor?<br>All in all, they are training us with bash and git for future projects.<br>I learned bash this week and luckily found that it was just like how the terminal in Linux OS worked.<br>Here are some notes:</p>
+<ol>
+<li><code>touch file.ext</code> is used to create a file. The type of the file depends on the extension you give.</li>
+<li><code>echo &quot;string&quot;</code> and <code>echo &quot;string&quot; &gt; file.ext</code> The first command prints the content in the string in a new line, and the second one prints the string into the fil. Using the “&gt;” redirect sign, you can write the string directly into the file through terminal, but “&gt;” will delete the original content and “&gt;&gt;” won’t </li>
+<li><code>cat file.ext</code> prints the content in the file to the terminal<br>I think these are things to be noticed during my bash learning. So much for that.</li>
+</ol>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2023-02-01T17:03:03.000Z" title="2/2/2023, 1:03:03 AM">2023-02-02</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-08-11T11:17:52.389Z" title="8/11/2023, 7:17:52 PM">2023-08-11</time></span><span class="level-item"><a class="link-muted" href="/categories/cs-learning/">cs_learning</a></span><span class="level-item">2 minutes read (About 339 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/02/02/2022-09-17-WecahtDevetoolntro/">Wechat Devtool 1</a></p><div class="content"><ol start="0">
+<li><h2 id="Wechat-Miniapplication"><a href="#Wechat-Miniapplication" class="headerlink" title="Wechat Miniapplication:"></a>Wechat Miniapplication:</h2></li>
+</ol>
+<p>Wechat Miniapplication is literally an application based on Wehcat. Different from ordinary applications, it is said that these miniapplications can be used without downloading &amp; installing. In fact, it is because they have a very small size (less than 2M) so that the users won’t be aware of the process of downloading.</p>
+<ol>
+<li><h2 id="Wechat-developer-tool-a-specially-designed-IDE-for-wechat-miniapplications"><a href="#Wechat-developer-tool-a-specially-designed-IDE-for-wechat-miniapplications" class="headerlink" title="Wechat developer tool: a specially designed IDE for wechat miniapplications."></a><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/en/dev/devtools/devtools.html">Wechat developer tool</a>: a specially designed IDE for wechat miniapplications.</h2></li>
+<li><h2 id="The-regular-code-structure-of-a-miniapplication"><a href="#The-regular-code-structure-of-a-miniapplication" class="headerlink" title="The regular code structure of a miniapplication:"></a>The regular code structure of a miniapplication:</h2></li>
+</ol>
+<details><summary>pages</summary>
+  It is recommended to create all the codes for each page of the application in this folder.
+  
+  <details><summary>&nbsp log</summary>
+    
+    
+<pre><code>This is an example folder for a log page in the application. In a page folder, there will usually be four files:
+
+log.js: .js file is responsible for the logical components of the page. Using javascript, developers can bind events to a button, pass parameters, etc.
+
+log.json: I haven&#39;t worked much about the .json files so far. As far as I know, it is resonsible for the page&#39;s &quot;setup&quot;: page title, text style, background color...
+
+log.wxml: .wxml is derived from html. It sues a language syntax similar to html to create elements like `&lt;view&gt;&lt;/view&gt;`, `&lt;button&gt;&lt;/button&gt;` on the page.
+
+log.wxss: wxss is derived from css. It works similarly. I use it to arrange the elements shown on the page, like position and flex display.
+</code></pre>
+  </details>
+
+
+</details>
+  
+
+<details><summary>utils</summary>
+  util.js
+</details>
+ 
+ 
+<details><summary>app.js</summary>
+  app.js file is responsible for the global logic. The APP() in it is the start point of the overall application code.
+</details>
+
+
+<details><summary>app.json</summary>
+  A page can be displayed only after you add the link of the page into this file. app.json is responsible for the global setup. For example, you can set the primary background color or add the tab bars. 
+</details>
+ 
+<details><summary>app.wxss</summary>
+  app.wxss works the same as the .wxss files of the pages, but it influences globally. The page wxss arrangement is prior to the global arrangement.
+</details>
+ 
+ 
+<details><summary>project.config.json</summary>
+  This file contains the settings of a miniapplication project.
+</details>
+
+
+<details><summary>sitemap.json</summary>
+</details>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-12-22T10:00:00.000Z" title="12/22/2022, 6:00:00 PM">2022-12-22</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-08-11T11:17:48.623Z" title="8/11/2023, 7:17:48 PM">2023-08-11</time></span><span class="level-item"><a class="link-muted" href="/categories/life/">life</a></span><span class="level-item">2 minutes read (About 292 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/12/22/2022-12-22-holiday/">Winter Holiday Vail, Colorado</a></p><div class="content"><h1 id="Arriving-at-Vail-Colorado"><a href="#Arriving-at-Vail-Colorado" class="headerlink" title="Arriving at Vail, Colorado!"></a>Arriving at Vail, Colorado!</h1><p><em>2022.12.16</em><br><br><br>Heavy snow covered the fields in Denvor!<br><img src="https://user-images.githubusercontent.com/60023638/209323372-d8ccb996-8219-4989-9dd2-47636764abb4.JPG" alt="IMG_0728"><br>First night at Vail Resort. It was fantastic with all neon lights glowing.<br><img src="https://user-images.githubusercontent.com/60023638/209323625-b4f5642e-4bbc-438c-a5c1-ee0f56cbc1aa.JPG" alt="IMG_0734"></p>
+<h1 id="Practicing-on-introductory-skiing-skills"><a href="#Practicing-on-introductory-skiing-skills" class="headerlink" title="Practicing on introductory skiing skills"></a>Practicing on introductory skiing skills</h1><p><em>2022.12.17</em><br><br><br>Since I’d skied for once before, I mastered the “snow plough” pretty quickly.</p>
+<blockquote>
+<p> snow plough is a elementary skiing skill. It helps to slow down by pushing the back of both skis out, or make a turn by pushing the back of one of the skis.</p>
+</blockquote>
+<h1 id="Learning-higher-level-skills-and-“adventure”-in-the-mountain"><a href="#Learning-higher-level-skills-and-“adventure”-in-the-mountain" class="headerlink" title="Learning higher level skills and “adventure” in the mountain"></a>Learning higher level skills and “adventure” in the mountain</h1><p><em>2022.12.18~2022.12.21</em><br>To be able to ski on steeper slopes, I had to learn the “parallel turning”, which would slow down and turn more effectively.<br>I practiced on a relatively gentle slope for two days.<br>Here are some tips:</p>
+<ol>
+<li>Put most of the weight of the body <strong>forward</strong> (downhill) so that the body won’t fall to the slope;</li>
+<li>While making a parallel turn, put more weight on the ski downhill, it is then easier to make the ski uphill parallel to the one downhill.</li>
+<li>Look forward and make sure that you cannot see the tips of your skis, or your weight may be lagging behind, leading to a fall.</li>
+</ol>
+<p>On 2022.12.21, I rode the chairlift to a top of the mountain and skied all the way down. There were some slip-overs but I did feel a sense of achievement!</p>
+<p><img src="https://user-images.githubusercontent.com/60023638/209328227-d4475800-b757-4277-b627-4df7b511a43c.jpg" alt="IMG_0853"><br><img src="https://user-images.githubusercontent.com/60023638/209327577-b208abfd-bf79-48a7-acb1-cbce90455184.JPG" alt="IMG_0821"></p>
+<p>For more pictures, go to <a target="_blank" rel="noopener" href="https://gong208.github.io/image_gallery/">image gallery</a></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-07-29T11:50:00.000Z" title="7/29/2022, 7:50:00 PM">2022-07-29</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-08-11T11:17:59.782Z" title="8/11/2023, 7:17:59 PM">2023-08-11</time></span><span class="level-item"><a class="link-muted" href="/categories/my-dishes/">my_dishes</a></span><span class="level-item">a minute read (About 222 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/07/29/2022-07-29-ChineseEggplant/">Gong&#039;s Dish -- braising eggplant</a></p><div class="content"><p>My first specialty dishes: Braising eggplant…<br><img src="https://user-images.githubusercontent.com/60023638/181752931-acc691d9-40ce-4473-a430-7b718fe8080e.jpg" alt="微信图片_20220729195140"><br>Even thoug it doesn’t look very tasty, it is really delicious especially when you eat it with rice.<br>Cookbook:</p>
+<ol>
+<li>Peel the eggplant and “spread” it like this:<br><img src="https://user-images.githubusercontent.com/60023638/181754030-b8e16528-bf0d-40c0-a9ec-ffd90aff2e41.jpg" alt="微信图片_20220729195931"><br>In this way the dish won’t look that messy.</li>
+<li>Then steam the eggplant for about 15 min.</li>
+<li>As for the sauce, there are two versions:<br>_ <strong>For the light version,</strong><br>  soy sauce                        2 spoons<br>  oyster sauce                     1 spoon<br>  <em>rice wine</em>                      <em>1 spoon</em><br>  dark soy sauce                   1 spoon (or less)<br>  honey                            1 spoon<br>  white sugar, salt                depends<br>  Starch water                     1 bowl<br>_ <strong>For the heavy flavor version,</strong><br>  soy sauce                        2 spoons<br>  oyster sauce                     1 spoon<br>  dark soy sauce                   1 spoon (or less)<br>  honey                            1 spoon<br>  white sugar, salt                depends<br>  <strong>Coca Cola (NO PEPSI, thanks!)  1 bowl</strong></li>
+<li>Fry the eggplants until they turn burnt yellow (I haven’t succeeded frying eggplants into this color, maybe I should add more oil?).</li>
+<li>Add the sauce into the pan, and stew it for some time over high heat to thicken the sauce.</li>
+<li>FINISHED</li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/60023638/181757866-87036e1a-f097-4ce0-b724-e3008a9b6ad0.jpg" alt="屏幕截图 2022-07-29 202452"></p>
+<p>さ、やてみろ！</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-07-21T04:30:05.000Z" title="7/21/2022, 12:30:05 PM">2022-07-21</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-08-11T11:17:40.258Z" title="8/11/2023, 7:17:40 PM">2023-08-11</time></span><span class="level-item"><a class="link-muted" href="/categories/cs-learning/">cs_learning</a></span><span class="level-item">a minute read (About 188 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/07/21/2022-07-21-mysql/">Inserting multiple rows using executemany command in mysql</a></p><div class="content"><p>While creating a table in a database, a row marked as <strong>“AUTO_INCREMENT”</strong> is necessary for multiple inserting:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE university (</span><br><span class="line">  id int(8) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  #without AUTO_INCREMENT, there will be an error while inserting multiple rows</span><br><span class="line">  name varchar(50) NOT NULL,</span><br><span class="line">  university varchar(50) NOT NULL,</span><br><span class="line">  major varchar(50) NOT NULL,</span><br><span class="line">  PRIMARY KEY (id)</span><br><span class="line">) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;</span><br></pre></td></tr></table></figure>
+<p>Then, create an array of the tuples you want to insert:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data = [(&quot;abc&quot;,&#x27;四川大学&#x27;,&#x27;口腔医学&#x27;),</span><br><span class="line">        (&quot;def&quot;,&#x27;北京师范大学&#x27;,&#x27;教育学类&#x27;),</span><br><span class="line">        (&quot;ghi&quot;,&#x27;北京工业大学&#x27;,&#x27;数学类&#x27;),</span><br><span class="line">        (&quot;jkl&quot;,&#x27;北京邮电大学&#x27;,&#x27;电子信息&#x27;),</span><br><span class="line">        (&quot;mno&quot;,&#x27;北京理工大学&#x27;,&#x27;未来精工技术&#x27;),</span><br><span class="line">        ]</span><br></pre></td></tr></table></figure>
+<p>And use executemany command to insert:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    # 执行sql语句，插入多条数据</span><br><span class="line">    cursor.executemany(&quot;insert into university(name, university, major) values (%s, %s, %s)&quot; , data)</span><br><span class="line">    # 提交数据</span><br><span class="line">    db.commit()</span><br><span class="line">except:</span><br><span class="line">    # 发生错误时回滚</span><br><span class="line">    db.rollback()</span><br><span class="line">    print(&#x27;error&#x27;)</span><br></pre></td></tr></table></figure>
+<p><em>lines about connecting to database and ceating cursor instance is ignored</em></p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-07-11T08:52:06.000Z" title="7/11/2022, 4:52:06 PM">2022-07-11</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-08-11T11:17:36.078Z" title="8/11/2023, 7:17:36 PM">2023-08-11</time></span><span class="level-item"><a class="link-muted" href="/categories/cs-learning/">cs_learning</a></span><span class="level-item">a minute read (About 219 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/07/11/2022-07-11-VirtualMachine/">Creating a virtual machine (ubuntu) with virtual box</a></p><div class="content"><p>Yesterday, I created a virtual machine for ubuntu system using VirtualBox.</p>
+<ol>
+<li>Download the iso file of the operating system:<br><img src="https://user-images.githubusercontent.com/60023638/178227735-87d4dc0a-1926-45e4-86a1-8e09f5452ab7.png" alt="ubuntu.iso"></li>
+<li>Open VirtualBox, then choose the corresponding operating system:<br><img src="https://user-images.githubusercontent.com/60023638/178228102-10852f20-308e-4387-897b-616d5f30d79a.png" alt="VirtualBox1"></li>
+<li>Mount the iso file on VirtualBox:<br><img src="https://user-images.githubusercontent.com/60023638/178228343-78ea470c-37b3-4726-ab43-eda03661dfde.png" alt="VirtualBox"></li>
+<li>Format the disk space.</li>
+<li>Complete the regular settings.</li>
+<li>Set network adapters:<br>_ there can be multiple adapters<br>_ For my virtual machine, one adapter is used for NAT, the other one is used to connect to the host through ssh<br><img src="https://user-images.githubusercontent.com/60023638/178288696-2ebb5253-85d5-41f3-933a-73754464c2d0.png" alt="image"></li>
+<li>remotely connect to the virtual machine through ssh:<br>On host system, search for folder <em>.ssh</em> . There should be a public key <em>id_rsa.pub</em> .<br>Then open it either using <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat id_rsa.pub</span><br></pre></td></tr></table></figure>
+or<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim id_rsa.pub</span><br></pre></td></tr></table></figure>
+Switch to the virtual machine, again, find <em>.ssh</em> folder and open it with<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim authorized_keys</span><br></pre></td></tr></table></figure>
+and paste the public key to the file, then save and close the file with<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:wq [ENTER]</span><br></pre></td></tr></table></figure></li>
+<li>Use<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip a</span><br></pre></td></tr></table></figure>
+to chech the ip address of the virtual machine, and connect to the virtual machine through ssh remotely.</li>
+</ol>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-07-08T15:00:00.000Z" title="7/8/2022, 11:00:00 PM">2022-07-08</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-08-11T11:17:31.335Z" title="8/11/2023, 7:17:31 PM">2023-08-11</time></span><span class="level-item"><a class="link-muted" href="/categories/website-update/">website_update</a></span><span class="level-item">a few seconds read (About 25 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/07/08/2022-07-08-image_gallery_update/">image gallery constructed</a></p><div class="content"><p>Agian, I moved a step forward to mastering markdown by using skilfful copy-pasting.</p>
+<details><summary>Pages</summary>
+  
+  <details><summary>log folder</summary>
+    
+    
+    
+<pre><code>log.js
+log.json
+log.wxml
+log.wxss
+</code></pre>
+  </details>
+   
+  
+</details>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-07-07T15:00:06.000Z" title="7/7/2022, 11:00:06 PM">2022-07-07</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-08-11T11:17:25.771Z" title="8/11/2023, 7:17:25 PM">2023-08-11</time></span><span class="level-item"><a class="link-muted" href="/categories/website-update/">website_update</a></span><span class="level-item">a minute read (About 134 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/07/07/2022-07-07-addingImage/">Testing the images</a></p><div class="content"><p><img src="/assets/chisato.jpg" alt="chisato"></p>
+<blockquote>
+<p>url: &#x2F;assets&#x2F;chisato.jpg</p>
+</blockquote>
+<p><img src="https://user-images.githubusercontent.com/60023638/177815981-3059b9b2-8228-492e-bc63-2c3d592643e3.jpg" alt="chisato"></p>
+<blockquote>
+<p>url: <a target="_blank" rel="noopener" href="https://user-images.githubusercontent.com/60023638/177815981-3059b9b2-8228-492e-bc63-2c3d592643e3.jpg">https://user-images.githubusercontent.com/60023638/177815981-3059b9b2-8228-492e-bc63-2c3d592643e3.jpg</a></p>
+</blockquote>
+<p>I tried to make the picture shown as part of the title of this post, which can then be displayed on homepage fo the website, and failed.<br>another thing worth to mention here is that, the first picture is first uploaded to the assets directory and then refered in this file. In this way, it has to be refered using a relative link. I know the first picture fails to display when you check this file on github, but it works on my website.<br>and the second is directly uploaded to this file, which works well as usual.</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-07-06T10:00:06.000Z" title="7/6/2022, 6:00:06 PM">2022-07-06</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-08-11T11:17:20.862Z" title="8/11/2023, 7:17:20 PM">2023-08-11</time></span><span class="level-item"><a class="link-muted" href="/categories/website-update/">website_update</a></span><span class="level-item">a few seconds read (About 57 words)</span></div></div><p class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/07/06/2022-07-06-mastering/">Mastering the website?!</a></p><div class="content"><p>As you can see, I’ve successfully created a ‘category’ page (basically copy-pasting from others’ work though).<br>And here I’m trying to upload the first picture of my website:<br><img src="https://user-images.githubusercontent.com/60023638/177532544-b75b6af8-8d19-4431-91c0-e7973c44867a.jpg" alt="5dedfb1f3a292df5e335e5c0f9315c6035a87370"><br>looks good.</p>
+</div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous is-invisible is-hidden-mobile"><a href="/Blog/page/0/">Previous</a></div><div class="pagination-next"><a href="/Blog/page/2/">Next</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link is-current" href="/Blog/">1</a></li><li><a class="pagination-link" href="/Blog/page/2/">2</a></li></ul></nav></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="Jiangshan Gong"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Jiangshan Gong</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>University of Illinois at Urbana-Champaign</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">13</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">5</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">0</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/ppoffice" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/gong208"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://www.linkedin.com/in/jiangshan-gong-2427691a4/"><i class="fab fa-facebook"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li><li><a class="level is-mobile" href="https://bulma.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bulma</span></span><span class="level-right"><span class="level-item tag">bulma.io</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/cs-learning/"><span class="level-start"><span class="level-item">cs_learning</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/cs-learning-life/"><span class="level-start"><span class="level-item">cs_learning life</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/life/"><span class="level-start"><span class="level-item">life</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/my-dishes/"><span class="level-start"><span class="level-item">my_dishes</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/website-update/"><span class="level-start"><span class="level-item">website_update</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-08-11T04:08:03.615Z">2023-08-11</time></p><p class="title"><a href="/2023/08/11/hello-world/">Hello World</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-02-01T17:03:03.000Z">2023-02-02</time></p><p class="title"><a href="/2023/02/02/2022-08-31-Long_Time_No_See/">Long Time No See and some bash codes tips</a></p><p class="categories"><a href="/categories/cs-learning-life/">cs_learning life</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-02-01T17:03:03.000Z">2023-02-02</time></p><p class="title"><a href="/2023/02/02/2022-09-17-WecahtDevetoolntro/">Wechat Devtool 1</a></p><p class="categories"><a href="/categories/cs-learning/">cs_learning</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-12-22T10:00:00.000Z">2022-12-22</time></p><p class="title"><a href="/2022/12/22/2022-12-22-holiday/">Winter Holiday Vail, Colorado</a></p><p class="categories"><a href="/categories/life/">life</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-07-29T11:50:00.000Z">2022-07-29</time></p><p class="title"><a href="/2022/07/29/2022-07-29-ChineseEggplant/">Gong&#039;s Dish -- braising eggplant</a></p><p class="categories"><a href="/categories/my-dishes/">my_dishes</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2023/"><span class="level-start"><span class="level-item">2023</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/"><span class="level-start"><span class="level-item">2022</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li></ul></div></div></div><!--!--></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Jiangshan&#039;s Personal Website" height="28"></a><p class="is-size-7"><span>&copy; 2023 Jiangshan Gong</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
