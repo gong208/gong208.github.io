@@ -389,7 +389,7 @@ th:not([align]) {
 }
 html {
   background-color: #f7f7f7;
-  font-size: 16px;
+  font-size: 14px;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   min-width: 300px;
@@ -5214,33 +5214,33 @@ fieldset[disabled] .button {
 }
 .container.is-fluid {
   max-width: none;
-  padding-left: 32px;
-  padding-right: 32px;
+  padding-left: 44px;
+  padding-right: 44px;
   width: 100%;
 }
 @media screen and (min-width: 1400px) {
   .container {
-    max-width: 1336px;
+    max-width: 1312px;
   }
 }
 @media screen and (max-width: 1599px) {
   .container.is-widescreen {
-    max-width: 1536px;
+    max-width: 1512px;
   }
 }
 @media screen and (max-width: 1919px) {
   .container.is-fullhd {
-    max-width: 1856px;
+    max-width: 1832px;
   }
 }
 @media screen and (min-width: 1600px) {
   .container {
-    max-width: 1536px;
+    max-width: 1512px;
   }
 }
 @media screen and (min-width: 1920px) {
   .container {
-    max-width: 1856px;
+    max-width: 1832px;
   }
 }
 .content li + li {
@@ -11643,18 +11643,18 @@ figure.highlight.foldable div.level-left {
 @media screen and (min-width: 1600px) {
   .is-1-column .container,
   .is-2-column .container {
-    max-width: 1336px;
-    width: 1336px;
+    max-width: 1312px;
+    width: 1312px;
   }
 }
 @media screen and (min-width: 1920px) {
   .is-2-column .container {
-    max-width: 1536px;
-    width: 1536px;
+    max-width: 1512px;
+    width: 1512px;
   }
   .is-1-column .container {
-    max-width: 1336px;
-    width: 1336px;
+    max-width: 1312px;
+    width: 1312px;
   }
 }
 @media screen and (min-width: 1104px), print {
@@ -11678,14 +11678,14 @@ figure.highlight.foldable div.level-left {
   }
 }
 .is-3-column {
-  background-image: url("https://res.lolicon.app/bilibili/bg_small.png");
+  background-image: url("https://gong208.github.io/gallery/girrafe_background.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
 }
 .is-2-column {
-  background-image: url("https://res.lolicon.app/bilibili/bg_small.png");
+  background-image: url("https://gong208.github.io/gallery/girrafe_background.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
