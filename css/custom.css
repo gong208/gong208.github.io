@@ -1,0 +1,25 @@
+.is-3-column {
+  background-image: url("https://res.lolicon.app/bilibili/bg_small.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+.is-2-column {
+  background-image: url("https://res.lolicon.app/bilibili/bg_small.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+#toc {
+  align-self: flex-start;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 1rem;
+}
+.widget,
+.footer {
+  background-color: rgba(255,255,255,0.7);
+  font-size: 0.75rem;
+}
