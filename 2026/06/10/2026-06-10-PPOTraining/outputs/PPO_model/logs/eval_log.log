@@ -1,0 +1,197 @@
+2026-06-09 13:06:37 - evalscope - INFO: Running with native backend
+2026-06-09 13:06:37 - evalscope - INFO: Dump task config to ./outputs/20260609_130637/configs/task_config.yaml
+2026-06-09 13:06:37 - evalscope - INFO: {
+    "model": "/root/hands-on-modern-rl/code/chapter08_rlhf/verl_gsm8k/merged_model",
+    "model_id": "merged_model",
+    "model_args": {
+        "revision": "master",
+        "precision": "torch.float16"
+    },
+    "model_task": "text_generation",
+    "chat_template": null,
+    "datasets": [
+        "gsm8k"
+    ],
+    "dataset_args": {
+        "gsm8k": {
+            "name": "gsm8k",
+            "dataset_id": "AI-ModelScope/gsm8k",
+            "output_types": [
+                "generation"
+            ],
+            "subset_list": [
+                "main"
+            ],
+            "default_subset": "default",
+            "few_shot_num": 4,
+            "few_shot_random": false,
+            "train_split": "train",
+            "eval_split": "test",
+            "prompt_template": "{question}\nPlease reason step by step, and put your final answer within \\boxed{{}}.",
+            "few_shot_prompt_template": "Here are some examples of how to solve similar problems:\n\n{fewshot}\n\n{question}\nPlease reason step by step, and put your final answer within \\boxed{{}}.",
+            "system_prompt": null,
+            "query_template": null,
+            "pretty_name": "GSM8K",
+            "description": "\n## Overview\n\nGSM8K (Grade School Math 8K) is a high-quality dataset of 8.5K linguistically diverse grade school math word problems created by human problem writers. The dataset is specifically designed to evaluate and improve the multi-step mathematical reasoning capabilities of language models.\n\n## Task Description\n\n- **Task Type**: Mathematical Word Problem Solving\n- **Input**: Natural language math word problem\n- **Output**: Numerical answer derived through step-by-step reasoning\n- **Difficulty**: Grade school level (2-8 reasoning steps required)\n\n## Key Features\n\n- Problems require basic arithmetic operations (addition, subtraction, multiplication, division)\n- Solutions involve 2 to 8 sequential reasoning steps\n- High linguistic diversity in problem formulations\n- Human-written problems ensuring natural language quality\n- Clear numerical answers for objective evaluation\n\n## Evaluation Notes\n\n- Default configuration uses **4-shot** examples with Chain-of-Thought (CoT) prompting\n- Answers should be formatted within `\\boxed{}` for proper extraction\n- The metric extracts numerical values for accuracy comparison\n- Supports both zero-shot and few-shot evaluation modes\n",
+            "paper_url": "https://arxiv.org/abs/2110.14168",
+            "data_statistics": null,
+            "sample_example": null,
+            "tags": [
+                "Math",
+                "Reasoning"
+            ],
+            "filters": null,
+            "metric_list": [
+                {
+                    "acc": {
+                        "numeric": true
+                    }
+                }
+            ],
+            "aggregation": "mean",
+            "shuffle": false,
+            "shuffle_choices": false,
+            "force_redownload": false,
+            "review_timeout": null,
+            "extra_params": {},
+            "sandbox_config": {},
+            "max_image_bytes": null
+        }
+    },
+    "dataset_dir": "/root/.cache/modelscope/hub/datasets",
+    "dataset_hub": "modelscope",
+    "repeats": 1,
+    "generation_config": {
+        "batch_size": 1,
+        "max_tokens": 2048,
+        "top_p": 1.0,
+        "temperature": 1.0,
+        "do_sample": false,
+        "top_k": 50,
+        "n": 1
+    },
+    "eval_type": "llm_ckpt",
+    "eval_backend": "Native",
+    "eval_config": null,
+    "limit": null,
+    "eval_batch_size": 1,
+    "use_cache": null,
+    "rerun_review": false,
+    "work_dir": "./outputs/20260609_130637",
+    "no_timestamp": false,
+    "enable_progress_tracker": false,
+    "ignore_errors": false,
+    "debug": false,
+    "seed": 42,
+    "api_url": null,
+    "timeout": null,
+    "stream": null,
+    "judge_strategy": "auto",
+    "judge_worker_num": 1,
+    "judge_model_args": {},
+    "analysis_report": false,
+    "collect_perf": true,
+    "sandbox": {
+        "enabled": false,
+        "engine": "docker",
+        "default_config": {},
+        "manager_config": {},
+        "pool_size": null
+    },
+    "use_sandbox": false,
+    "sandbox_type": "docker",
+    "sandbox_manager_config": {},
+    "agent_config": null,
+    "evalscope_version": "1.8.0"
+}
+2026-06-09 13:06:37 - evalscope - INFO: Start loading benchmark dataset: gsm8k
+2026-06-09 13:06:38 - evalscope - INFO: Loading dataset AI-ModelScope/gsm8k from modelscope > subset: main > split: test ...
+2026-06-09 13:06:45 - evalscope - INFO: Loading dataset AI-ModelScope/gsm8k from modelscope > subset: main > split: train ...
+2026-06-09 13:06:50 - evalscope - INFO: Start evaluating 1 subsets of gsm8k: ['main']
+2026-06-09 13:06:50 - evalscope - INFO: Unified pool: 1319 items to process, 0 already fully cached (1319 total across all subsets).
+2026-06-09 13:06:50 - evalscope - INFO: Loading model for prediction...
+2026-06-09 13:06:50 - evalscope - INFO: Creating model /root/hands-on-modern-rl/code/chapter08_rlhf/verl_gsm8k/merged_model with eval_type=llm_ckpt base_url=None, config={'retries': 5, 'retry_interval': 10, 'batch_size': 1, 'max_tokens': 2048, 'top_p': 1.0, 'temperature': 1.0, 'do_sample': False, 'top_k': 50, 'n': 1}, model_args={'revision': 'master', 'precision': 'torch.float16'}
+2026-06-09 13:06:53 - evalscope - INFO: Model loaded successfully.
+2026-06-09 13:07:50 - evalscope - INFO: Evaluating[gsm8k]   2%| 28/1319 [Elapsed: 01:00 < Remaining: 38:22,  1.78s/it]
+2026-06-09 13:08:51 - evalscope - INFO: Evaluating[gsm8k]   5%| 60/1319 [Elapsed: 02:00 < Remaining: 31:24,  1.50s/it]
+2026-06-09 13:09:51 - evalscope - INFO: Evaluating[gsm8k]   7%| 94/1319 [Elapsed: 03:01 < Remaining: 29:19,  1.44s/it]
+2026-06-09 13:10:52 - evalscope - INFO: Evaluating[gsm8k]   9%| 125/1319 [Elapsed: 04:02 < Remaining: 40:27,  2.03s/it]
+2026-06-09 13:11:53 - evalscope - INFO: Evaluating[gsm8k]  12%| 155/1319 [Elapsed: 05:03 < Remaining: 52:00,  2.68s/it]
+2026-06-09 13:12:54 - evalscope - INFO: Evaluating[gsm8k]  14%| 186/1319 [Elapsed: 06:04 < Remaining: 43:07,  2.28s/it]
+2026-06-09 13:13:54 - evalscope - INFO: Evaluating[gsm8k]  16%| 216/1319 [Elapsed: 07:04 < Remaining: 39:03,  2.12s/it]
+2026-06-09 13:14:55 - evalscope - INFO: Evaluating[gsm8k]  19%| 250/1319 [Elapsed: 08:04 < Remaining: 32:53,  1.85s/it]
+2026-06-09 13:15:55 - evalscope - INFO: Evaluating[gsm8k]  21%| 283/1319 [Elapsed: 09:05 < Remaining: 31:11,  1.81s/it]
+2026-06-09 13:16:56 - evalscope - INFO: Evaluating[gsm8k]  24%| 314/1319 [Elapsed: 10:06 < Remaining: 33:08,  1.98s/it]
+2026-06-09 13:17:57 - evalscope - INFO: Evaluating[gsm8k]  26%| 343/1319 [Elapsed: 11:07 < Remaining: 35:06,  2.16s/it]
+2026-06-09 13:18:57 - evalscope - INFO: Evaluating[gsm8k]  28%| 375/1319 [Elapsed: 12:07 < Remaining: 26:46,  1.70s/it]
+2026-06-09 13:19:58 - evalscope - INFO: Evaluating[gsm8k]  31%| 405/1319 [Elapsed: 13:08 < Remaining: 32:56,  2.16s/it]
+2026-06-09 13:20:58 - evalscope - INFO: Evaluating[gsm8k]  32%| 424/1319 [Elapsed: 14:08 < Remaining: 2:02:02,  8.18s/it]
+2026-06-09 13:21:59 - evalscope - INFO: Evaluating[gsm8k]  34%| 454/1319 [Elapsed: 15:08 < Remaining: 32:45,  2.27s/it]
+2026-06-09 13:22:59 - evalscope - INFO: Evaluating[gsm8k]  37%| 490/1319 [Elapsed: 16:08 < Remaining: 19:42,  1.43s/it]
+2026-06-09 13:24:00 - evalscope - INFO: Evaluating[gsm8k]  39%| 521/1319 [Elapsed: 17:09 < Remaining: 24:02,  1.81s/it]
+2026-06-09 13:25:00 - evalscope - INFO: Evaluating[gsm8k]  42%| 553/1319 [Elapsed: 18:10 < Remaining: 24:30,  1.92s/it]
+2026-06-09 13:26:01 - evalscope - INFO: Evaluating[gsm8k]  44%| 586/1319 [Elapsed: 19:10 < Remaining: 25:03,  2.05s/it]
+2026-06-09 13:27:01 - evalscope - INFO: Evaluating[gsm8k]  47%| 616/1319 [Elapsed: 20:11 < Remaining: 23:39,  2.02s/it]
+2026-06-09 13:28:01 - evalscope - INFO: Evaluating[gsm8k]  49%| 648/1319 [Elapsed: 21:11 < Remaining: 20:53,  1.87s/it]
+2026-06-09 13:29:02 - evalscope - INFO: Evaluating[gsm8k]  51%| 668/1319 [Elapsed: 22:11 < Remaining: 34:43,  3.20s/it]
+2026-06-09 13:30:02 - evalscope - INFO: Evaluating[gsm8k]  53%| 701/1319 [Elapsed: 23:12 < Remaining: 18:46,  1.82s/it]
+2026-06-09 13:31:03 - evalscope - INFO: Evaluating[gsm8k]  55%| 732/1319 [Elapsed: 24:12 < Remaining: 18:22,  1.88s/it]
+2026-06-09 13:32:03 - evalscope - INFO: Evaluating[gsm8k]  58%| 765/1319 [Elapsed: 25:13 < Remaining: 15:48,  1.71s/it]
+2026-06-09 13:33:04 - evalscope - INFO: Evaluating[gsm8k]  60%| 797/1319 [Elapsed: 26:13 < Remaining: 13:58,  1.61s/it]
+2026-06-09 13:34:05 - evalscope - INFO: Evaluating[gsm8k]  63%| 826/1319 [Elapsed: 27:14 < Remaining: 17:39,  2.15s/it]
+2026-06-09 13:35:05 - evalscope - INFO: Evaluating[gsm8k]  65%| 855/1319 [Elapsed: 28:14 < Remaining: 14:23,  1.86s/it]
+2026-06-09 13:36:06 - evalscope - INFO: Evaluating[gsm8k]  67%| 887/1319 [Elapsed: 29:15 < Remaining: 14:13,  1.98s/it]
+2026-06-09 13:37:06 - evalscope - INFO: Evaluating[gsm8k]  70%| 919/1319 [Elapsed: 30:16 < Remaining: 11:45,  1.76s/it]
+2026-06-09 13:38:06 - evalscope - INFO: Evaluating[gsm8k]  72%| 947/1319 [Elapsed: 31:16 < Remaining: 12:07,  1.96s/it]
+2026-06-09 13:39:07 - evalscope - INFO: Evaluating[gsm8k]  74%| 976/1319 [Elapsed: 32:16 < Remaining: 11:11,  1.96s/it]
+2026-06-09 13:40:07 - evalscope - INFO: Evaluating[gsm8k]  76%| 1005/1319 [Elapsed: 33:17 < Remaining: 11:54,  2.28s/it]
+2026-06-09 13:41:08 - evalscope - INFO: Evaluating[gsm8k]  78%| 1034/1319 [Elapsed: 34:17 < Remaining: 09:44,  2.05s/it]
+2026-06-09 13:42:08 - evalscope - INFO: Evaluating[gsm8k]  81%| 1065/1319 [Elapsed: 35:18 < Remaining: 07:33,  1.78s/it]
+2026-06-09 13:43:08 - evalscope - INFO: Evaluating[gsm8k]  83%| 1092/1319 [Elapsed: 36:18 < Remaining: 07:28,  1.97s/it]
+2026-06-09 13:44:08 - evalscope - INFO: Evaluating[gsm8k]  85%| 1126/1319 [Elapsed: 37:18 < Remaining: 05:49,  1.81s/it]
+2026-06-09 13:45:09 - evalscope - INFO: Evaluating[gsm8k]  88%| 1157/1319 [Elapsed: 38:18 < Remaining: 04:38,  1.72s/it]
+2026-06-09 13:46:09 - evalscope - INFO: Evaluating[gsm8k]  90%| 1185/1319 [Elapsed: 39:19 < Remaining: 04:42,  2.11s/it]
+2026-06-09 13:47:10 - evalscope - INFO: Evaluating[gsm8k]  92%| 1214/1319 [Elapsed: 40:20 < Remaining: 03:06,  1.77s/it]
+2026-06-09 13:48:11 - evalscope - INFO: Evaluating[gsm8k]  94%| 1245/1319 [Elapsed: 41:20 < Remaining: 02:40,  2.17s/it]
+2026-06-09 13:49:11 - evalscope - INFO: Evaluating[gsm8k]  97%| 1274/1319 [Elapsed: 42:21 < Remaining: 01:26,  1.93s/it]
+2026-06-09 13:50:11 - evalscope - INFO: Evaluating[gsm8k]  99%| 1307/1319 [Elapsed: 43:21 < Remaining: 00:26,  2.25s/it]
+2026-06-09 13:50:32 - evalscope - INFO: Evaluating[gsm8k] 100%| 1319/1319 [Elapsed: 43:41 < Remaining: 00:00,  1.85s/it]
+2026-06-09 13:50:32 - evalscope - INFO: Unified pool finished for gsm8k.
+2026-06-09 13:50:32 - evalscope - INFO: Aggregating scores for subset: main
+2026-06-09 13:50:32 - evalscope - INFO: Generating report...
+2026-06-09 13:50:32 - evalscope - INFO: 
+gsm8k report table:
+┌──────────────┬───────────┬──────────┬──────────┬───────┬─────────┬─────────┐
+│ Model        │ Dataset   │ Metric   │ Subset   │   Num │   Score │ Cat.0   │
+├──────────────┼───────────┼──────────┼──────────┼───────┼─────────┼─────────┤
+│ merged_model │ gsm8k     │ mean_acc │ main     │  1319 │  0.5633 │ default │
+└──────────────┴───────────┴──────────┴──────────┴───────┴─────────┴─────────┘ 
+
+2026-06-09 13:50:32 - evalscope - INFO: Skipping report analysis (`analysis_report=False`).
+2026-06-09 13:50:32 - evalscope - INFO: Dump report to: ./outputs/20260609_130637/reports/merged_model/gsm8k.json 
+
+2026-06-09 13:50:32 - evalscope - INFO: 
+gsm8k perf table:
+Model         Dataset      Num    Avg Lat  Avg TTFT    Avg TPOT      Avg Thpt    Avg In    Avg Out
+                                      (s)  (ms)        (ms)           (tok/s)       Tok        Tok
+------------  ---------  -----  ---------  ----------  ----------  ----------  --------  ---------
+merged_model  gsm8k       1319      1.982  -           -                89.22   682.308    176.831
+
+2026-06-09 13:50:32 - evalscope - INFO: Benchmark gsm8k evaluation finished.
+2026-06-09 13:50:32 - evalscope - INFO: Running[eval] 100%| 1/1 [Elapsed: 43:54 < Remaining: 00:00, 2634.48s/benchmark]
+2026-06-09 13:50:32 - evalscope - INFO: Overall report table: 
+┌──────────────┬───────────┬──────────┬──────────┬───────┬─────────┬─────────┐
+│ Model        │ Dataset   │ Metric   │ Subset   │   Num │   Score │ Cat.0   │
+├──────────────┼───────────┼──────────┼──────────┼───────┼─────────┼─────────┤
+│ merged_model │ gsm8k     │ mean_acc │ main     │  1319 │  0.5633 │ default │
+└──────────────┴───────────┴──────────┴──────────┴───────┴─────────┴─────────┘ 
+
+2026-06-09 13:50:32 - evalscope - INFO: Overall perf table: 
+Model         Dataset      Num    Avg Lat  Avg TTFT    Avg TPOT      Avg Thpt    Avg In    Avg Out
+                                      (s)  (ms)        (ms)           (tok/s)       Tok        Tok
+------------  ---------  -----  ---------  ----------  ----------  ----------  --------  ---------
+merged_model  gsm8k       1319      1.982  -           -                89.22   682.308    176.831 
+
+2026-06-09 13:50:32 - evalscope - INFO: HTML report generated: /root/hands-on-modern-rl/outputs/20260609_130637/reports/report.html
+2026-06-09 13:50:33 - evalscope - INFO: Finished evaluation for merged_model on ['gsm8k']
+2026-06-09 13:50:33 - evalscope - INFO: Output directory: ./outputs/20260609_130637

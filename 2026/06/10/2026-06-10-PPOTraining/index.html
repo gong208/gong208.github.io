@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>PPO Training Qwen2.5-0.5B-Instruct on GSM8K with veRL - Jiangshan&#039;s Personal Website</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Jiangshan&#039;s Personal Website"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jiangshan&#039;s Personal Website"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="PPO training Qwen2.5-0.5B-Instruct on GSM8K dataset using veRL"><meta property="og:type" content="blog"><meta property="og:title" content="PPO Training Qwen2.5-0.5B-Instruct on GSM8K with veRL"><meta property="og:url" content="http://gong208.github.io/2026/06/10/2026-06-10-PPOTraining/"><meta property="og:site_name" content="Jiangshan&#039;s Personal Website"><meta property="og:description" content="PPO training Qwen2.5-0.5B-Instruct on GSM8K dataset using veRL"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://gong208.github.io/img/og_image.png"><meta property="article:published_time" content="2026-06-10T02:06:17.000Z"><meta property="article:modified_time" content="2026-06-10T07:37:56.597Z"><meta property="article:author" content="Jiangshan Gong"><meta property="article:tag" content="RL"><meta property="article:tag" content="LLM"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://gong208.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://gong208.github.io/2026/06/10/2026-06-10-PPOTraining/"},"headline":"Jiangshan Gong","image":["http://gong208.github.io/img/og_image.png"],"datePublished":"2026-06-10T02:06:17.000Z","dateModified":"2026-06-10T07:37:56.597Z","author":{"@type":"Person","name":"Jiangshan Gong"},"publisher":{"@type":"Organization","name":"Jiangshan's Personal Website","logo":{"@type":"ImageObject","url":"http://gong208.github.io/img/logo.svg"}},"description":"This is Jiangshan Gong&#39;s personal website"}</script><link rel="canonical" href="http://gong208.github.io/2026/06/10/2026-06-10-PPOTraining/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Jiangshan&#039;s Personal Website" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/Blog">Blog</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/About">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2026-06-10T02:06:17.000Z" title="6/10/2026, 10:06:17 AM">2026-06-10</time></span><span class="level-item">Updated&nbsp;<time dateTime="2026-06-10T07:37:56.597Z" title="6/10/2026, 3:37:56 PM">2026-06-10</time></span><span class="level-item"><a class="link-muted" href="/categories/Study/">Study</a></span><span class="level-item">4 minutes read (About 661 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">PPO Training Qwen2.5-0.5B-Instruct on GSM8K with veRL</h1><div class="content"><p>This post evaluates the effect of PPO fine-tuning on <code>Qwen2.5-0.5B-Instruct</code> for mathematical reasoning, using the <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2110.14168">GSM8K</a> benchmark. The model was fine-tuned with <a target="_blank" rel="noopener" href="https://github.com/volcengine/verl">veRL</a> on the GSM8K training split and then evaluated against the base model on the 1,319-problem test set.</p>
+<h2 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h2><p>Both models were evaluated with <a target="_blank" rel="noopener" href="https://github.com/modelscope/evalscope">evalscope</a> (v1.8.0) using identical settings:</p>
+<ul>
+<li><strong>Dataset</strong>: GSM8K <code>main</code> split, 1,319 test problems</li>
+<li><strong>Prompting</strong>: 4-shot chain-of-thought, answers in <code>\boxed&#123;&#125;</code></li>
+<li><strong>Generation</strong>: greedy decoding (<code>do_sample=False</code>), <code>max_tokens=2048</code>, <code>temperature=1.0</code></li>
+<li><strong>Precision</strong>: <code>torch.float16</code></li>
+</ul>
+<hr>
+<h2 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h2><h3 id="Accuracy"><a href="#Accuracy" class="headerlink" title="Accuracy"></a>Accuracy</h3><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>GSM8K Accuracy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Qwen2.5-0.5B-Instruct (base)</td>
+<td>45.56%</td>
+</tr>
+<tr>
+<td>PPO fine-tuned (merged_model)</td>
+<td><strong>56.33%</strong></td>
+</tr>
+</tbody></table>
+<p>PPO training lifted accuracy by <strong>+10.77 percentage points</strong> — a <strong>~23.6% relative improvement</strong> over the base model.</p>
+<h3 id="Inference-Performance"><a href="#Inference-Performance" class="headerlink" title="Inference Performance"></a>Inference Performance</h3><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Base Model</th>
+<th>PPO Model</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Avg Latency (s)</td>
+<td>4.06</td>
+<td><strong>1.98</strong></td>
+<td>−51%</td>
+</tr>
+<tr>
+<td>Avg Throughput (tok&#x2F;s)</td>
+<td>75.88</td>
+<td><strong>89.22</strong></td>
+<td>+18%</td>
+</tr>
+<tr>
+<td>Avg Input Tokens</td>
+<td>682.3</td>
+<td>682.3</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Avg Output Tokens</td>
+<td>308.2</td>
+<td><strong>176.8</strong></td>
+<td>−43%</td>
+</tr>
+<tr>
+<td>Total Eval Time</td>
+<td>~89 min</td>
+<td><strong>~44 min</strong></td>
+<td>−51%</td>
+</tr>
+</tbody></table>
+<p>The PPO model generates <strong>~43% fewer output tokens</strong> on average while achieving higher accuracy. This makes intuitive sense: PPO with a format&#x2F;correctness reward encourages the model to reason concisely and commit to an answer rather than pad with redundant steps.</p>
+<hr>
+<h2 id="Qualitative-Example-index-0"><a href="#Qualitative-Example-index-0" class="headerlink" title="Qualitative Example (index 0)"></a>Qualitative Example (index 0)</h2><p>Both models received the same 4-shot prompt followed by this question:</p>
+<blockquote>
+<p>Janet’s ducks lay 16 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with four. She sells the remainder at the farmers’ market daily for $2 per fresh duck egg. How much in dollars does she make every day at the farmers’ market?</p>
+</blockquote>
+<p>The correct answer is <strong>$18</strong> (16 − 3 − 4 &#x3D; 9 eggs sold; 9 × $2 &#x3D; $18).</p>
+<h3 id="Base-model-output"><a href="#Base-model-output" class="headerlink" title="Base model output"></a>Base model output</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">To determine how much Janet makes every day at the farmers&#x27; market, we need to follow these steps:</span><br><span class="line"></span><br><span class="line">1. Calculate the number of eggs laid by the ducks each day.</span><br><span class="line">2. Determine the total revenue from selling the eggs.</span><br><span class="line"></span><br><span class="line">**Step 1: Calculate the number of eggs laid by the ducks each day.**</span><br><span class="line"></span><br><span class="line">Janet&#x27;s ducks lay 16 eggs per day.</span><br><span class="line"></span><br><span class="line">**Step 2: Determine the total revenue from selling the eggs.**</span><br><span class="line"></span><br><span class="line">Janet sells the eggs at $2 per fresh duck egg. Therefore, the total revenue is calculated as follows:</span><br><span class="line"></span><br><span class="line">Total Revenue = Number of Eggs Laid Each Day × Price per Egg</span><br><span class="line"></span><br><span class="line">Substituting the values:</span><br><span class="line"></span><br><span class="line">Total Revenue = 16 × 2 = 32</span><br><span class="line"></span><br><span class="line">Thus, Janet makes \boxed&#123;32&#125; dollars every day at the farmers&#x27; market.</span><br></pre></td></tr></table></figure>
+
+<p><strong>Result: WRONG ($32).</strong> The base model skips the subtraction step entirely — it ignores the 3 eggs eaten for breakfast and 4 used for baking, multiplying the full 16 eggs by $2.</p>
+<h3 id="PPO-model-output"><a href="#PPO-model-output" class="headerlink" title="PPO model output"></a>PPO model output</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">First, we need to calculate the total number of eggs Janet lays in a day. She lays 16 eggs per day.</span><br><span class="line"></span><br><span class="line">Next, we calculate the total number of eggs she eats in a day. She eats 3 eggs for breakfast and 4 eggs baking muffins,</span><br><span class="line">so she eats 3 + 4 = 7 eggs per day.</span><br><span class="line"></span><br><span class="line">Subtracting the number of eggs she eats from the total number of eggs she lays gives us the number of eggs she sells:</span><br><span class="line">16 - 7 = 9 eggs per day.</span><br><span class="line"></span><br><span class="line">She sells each egg for $2, so the total revenue she makes every day is 9 × 2 = 18 dollars.</span><br><span class="line"></span><br><span class="line">Therefore, the amount she makes every day at the farmers&#x27; market is \boxed&#123;18&#125;.</span><br></pre></td></tr></table></figure>
+
+<p><strong>Result: CORRECT ($18).</strong> The PPO model correctly accounts for all consumed eggs before computing revenue.</p>
+<h3 id="Key-differences"><a href="#Key-differences" class="headerlink" title="Key differences"></a>Key differences</h3><table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Base Model</th>
+<th>PPO Model</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Correctness</td>
+<td>Wrong (missed subtraction step)</td>
+<td>Correct</td>
+</tr>
+<tr>
+<td>Reasoning structure</td>
+<td>Verbose, uses bold headers and display math blocks</td>
+<td>Concise inline prose</td>
+</tr>
+<tr>
+<td>Output length (this example)</td>
+<td>Longer (~120 tokens)</td>
+<td>Shorter (~90 tokens)</td>
+</tr>
+<tr>
+<td>Format adherence</td>
+<td><code>\boxed&#123;&#125;</code> present</td>
+<td><code>\boxed&#123;&#125;</code> present</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Takeaways"><a href="#Takeaways" class="headerlink" title="Takeaways"></a>Takeaways</h2><ol>
+<li><strong>PPO meaningfully improves math reasoning</strong> on a 0.5B model — a 10+ point accuracy gain on GSM8K is substantial for this model size.</li>
+<li><strong>The model learns conciseness as a side effect</strong>: fewer tokens per response, lower latency, higher throughput. The reward signal (correctness + format) implicitly penalizes the verbose, unfocused generation pattern seen in the base model.</li>
+<li><strong>The base model’s failure mode is reasoning shortcuts</strong> — it often skips intermediate steps and arrives at a plausible-sounding but wrong computation. PPO training reduces this by rewarding complete, correct multi-step solutions.</li>
+</ol>
+</div><div class="article-licensing box"><div class="licensing-title"><p>PPO Training Qwen2.5-0.5B-Instruct on GSM8K with veRL</p><p><a href="http://gong208.github.io/2026/06/10/2026-06-10-PPOTraining/">http://gong208.github.io/2026/06/10/2026-06-10-PPOTraining/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Jiangshan Gong</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2026-06-10</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2026-06-10</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/RL/">RL</a><a class="link-muted mr-2" rel="tag" href="/tags/LLM/">LLM</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2026/06/08/2026-06-06-RLPre/"><span class="level-item">2026-06-06-RLPre</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><script src="https://utteranc.es/client.js" repo="gong208/gong208.github.io" issue-term="pathname" label="comment" theme="github-light" crossorigin="anonymous" async></script></div></div></div><div class="column column-left is-3-tablet is-3-desktop is-3-widescreen  order-1"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-10T02:06:17.000Z">2026-06-10</time></p><p class="title"><a href="/2026/06/10/2026-06-10-PPOTraining/">PPO Training Qwen2.5-0.5B-Instruct on GSM8K with veRL</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-08T02:06:17.000Z">2026-06-08</time></p><p class="title"><a href="/2026/06/08/2026-06-06-RLPre/">2026-06-06-RLPre</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-08T02:06:17.000Z">2026-06-08</time></p><p class="title"><a href="/2026/06/08/2026-06-08-RLforLLM/">2026-06-08-RLforLLM</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-03T08:26:36.000Z">2026-06-03</time></p><p class="title"><a href="/2026/06/03/2026-06-03-SwingUpCartpole/">2026-06-03-SwingUpCartpole</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-01T03:47:22.000Z">2026-06-01</time></p><p class="title"><a href="/2026/06/01/2026-06-01-Slahmr-examples/">2026-06-01-Slahmr_examples</a></p><p class="categories"><a href="/categories/Research/">Research</a></p></div></article></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Life/"><span class="level-start"><span class="level-item">Life</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/Research/"><span class="level-start"><span class="level-item">Research</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Study/"><span class="level-start"><span class="level-item">Study</span></span><span class="level-end"><span class="level-item tag">16</span></span></a></li></ul></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Setup"><span class="level-left"><span class="level-item">1</span><span class="level-item">Setup</span></span></a></li><li><a class="level is-mobile" href="#Results"><span class="level-left"><span class="level-item">2</span><span class="level-item">Results</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Accuracy"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">Accuracy</span></span></a></li><li><a class="level is-mobile" href="#Inference-Performance"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">Inference Performance</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Qualitative-Example-index-0"><span class="level-left"><span class="level-item">3</span><span class="level-item">Qualitative Example (index 0)</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Base-model-output"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">Base model output</span></span></a></li><li><a class="level is-mobile" href="#PPO-model-output"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">PPO model output</span></span></a></li><li><a class="level is-mobile" href="#Key-differences"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">Key differences</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Takeaways"><span class="level-left"><span class="level-item">4</span><span class="level-item">Takeaways</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Jiangshan&#039;s Personal Website" height="28"></a><p class="is-size-7"><span>&copy; 2026 Jiangshan Gong</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mhchem.min.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
