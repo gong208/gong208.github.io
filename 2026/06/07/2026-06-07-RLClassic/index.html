@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>2026-06-07-RLClassic - Jiangshan&#039;s Personal Website</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Jiangshan&#039;s Personal Website"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jiangshan&#039;s Personal Website"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Classic RL Methods including DP, MC, and TD"><meta property="og:type" content="blog"><meta property="og:title" content="2026-06-07-RLClassic"><meta property="og:url" content="http://gong208.github.io/2026/06/07/2026-06-07-RLClassic/"><meta property="og:site_name" content="Jiangshan&#039;s Personal Website"><meta property="og:description" content="Classic RL Methods including DP, MC, and TD"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://gong208.github.io/img/og_image.png"><meta property="article:published_time" content="2026-06-07T02:06:17.000Z"><meta property="article:modified_time" content="2026-06-16T11:12:41.741Z"><meta property="article:author" content="Jiangshan Gong"><meta property="article:tag" content="RL"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://gong208.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://gong208.github.io/2026/06/07/2026-06-07-RLClassic/"},"headline":"Jiangshan Gong","image":["http://gong208.github.io/img/og_image.png"],"datePublished":"2026-06-07T02:06:17.000Z","dateModified":"2026-06-16T11:12:41.741Z","author":{"@type":"Person","name":"Jiangshan Gong"},"publisher":{"@type":"Organization","name":"Jiangshan's Personal Website","logo":{"@type":"ImageObject","url":"http://gong208.github.io/img/logo.svg"}},"description":"This is Jiangshan Gong&#39;s personal website"}</script><link rel="canonical" href="http://gong208.github.io/2026/06/07/2026-06-07-RLClassic/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>2026-06-07-RLClassic - Jiangshan&#039;s Personal Website</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Jiangshan&#039;s Personal Website"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jiangshan&#039;s Personal Website"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Classic RL Methods including DP, MC, and TD"><meta property="og:type" content="blog"><meta property="og:title" content="2026-06-07-RLClassic"><meta property="og:url" content="http://gong208.github.io/2026/06/07/2026-06-07-RLClassic/"><meta property="og:site_name" content="Jiangshan&#039;s Personal Website"><meta property="og:description" content="Classic RL Methods including DP, MC, and TD"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://gong208.github.io/img/og_image.png"><meta property="article:published_time" content="2026-06-07T02:06:17.000Z"><meta property="article:modified_time" content="2026-06-17T10:11:59.020Z"><meta property="article:author" content="Jiangshan Gong"><meta property="article:tag" content="RL"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://gong208.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://gong208.github.io/2026/06/07/2026-06-07-RLClassic/"},"headline":"Jiangshan Gong","image":["http://gong208.github.io/img/og_image.png"],"datePublished":"2026-06-07T02:06:17.000Z","dateModified":"2026-06-17T10:11:59.020Z","author":{"@type":"Person","name":"Jiangshan Gong"},"publisher":{"@type":"Organization","name":"Jiangshan's Personal Website","logo":{"@type":"ImageObject","url":"http://gong208.github.io/img/logo.svg"}},"description":"This is Jiangshan Gong&#39;s personal website"}</script><link rel="canonical" href="http://gong208.github.io/2026/06/07/2026-06-07-RLClassic/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
   (function () {
       function switchTab() {
           if (!location.hash) {
@@ -29,17 +29,22 @@
       switchTab();
       window.addEventListener('hashchange', switchTab, false);
   })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Jiangshan&#039;s Personal Website" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/Blog">Blog</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/About">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2026-06-07T02:06:17.000Z" title="6/7/2026, 10:06:17 AM">2026-06-07</time></span><span class="level-item">Updated&nbsp;<time dateTime="2026-06-16T11:12:41.741Z" title="6/16/2026, 7:12:41 PM">2026-06-16</time></span><span class="level-item"><a class="link-muted" href="/categories/Study/">Study</a></span><span class="level-item">9 minutes read (About 1301 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">2026-06-07-RLClassic</h1><div class="content"><h2 id="Overview-From-Planning-to-Learning"><a href="#Overview-From-Planning-to-Learning" class="headerlink" title="Overview: From Planning to Learning"></a>Overview: From Planning to Learning</h2><p>In the previous post, we introduced the basic formulation of reinforcement learning, including Markov Decision Processes, policies, value functions, and Bellman equations. Once value functions are defined, the next question is how to actually compute or estimate them.</p>
-<p>This post discusses three major approaches:</p>
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Jiangshan&#039;s Personal Website" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/Blog">Blog</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/About">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2026-06-07T02:06:17.000Z" title="6/7/2026, 10:06:17 AM">2026-06-07</time></span><span class="level-item">Updated&nbsp;<time dateTime="2026-06-17T10:11:59.020Z" title="6/17/2026, 6:11:59 PM">2026-06-17</time></span><span class="level-item"><a class="link-muted" href="/categories/Study/">Study</a></span><span class="level-item">18 minutes read (About 2732 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">2026-06-07-RLClassic</h1><div class="content"><h2 id="Overview-From-Planning-to-Learning"><a href="#Overview-From-Planning-to-Learning" class="headerlink" title="Overview: From Planning to Learning"></a>Overview: From Planning to Learning</h2><p>In the previous post, we introduced the basic formulation of reinforcement learning, including Markov Decision Processes, policies, value functions, and Bellman equations. Once value functions are defined, the next question is how to compute or estimate them.</p>
+<p>In this post, we focus on the <strong>value prediction problem</strong>:</p>
+<blockquote>
+<p>Given a fixed policy \(\pi\), how can we estimate its state value function \(V^\pi\)?</p>
+</blockquote>
+<p>This is different from the <strong>control problem</strong>, where the goal is to improve the policy and eventually find an optimal policy \(\pi^*\). In the Dynamic Programming section, we briefly discuss policy iteration and value iteration because they naturally follow from Bellman equations. However, for Monte Carlo and Temporal-Difference methods, the discussion focuses on estimating \(V^\pi\) for a fixed policy.</p>
+<p>The three major approaches discussed in this post are:</p>
 <ol>
 <li>Dynamic Programming</li>
 <li>Monte Carlo methods</li>
 <li>Temporal-Difference learning</li>
 </ol>
 <p>These methods can be understood as a gradual transition from <strong>model-based planning</strong> to <strong>model-free learning</strong>.</p>
-<p>Dynamic Programming assumes that <strong>the environment model is known</strong>. In other words, we have access to the transition dynamics \(P(s’ \mid s,a)\) and the reward function \(r(s,a)\). With this model, we can compute Bellman backups by taking expectations over all possible next states. Therefore, Dynamic Programming is usually considered a “planning” method rather than a “learning” method.</p>
-<p>Monte Carlo methods remove the need for a known model. They estimate value functions from sampled episodes without knowledge of \(P(s’ \mid s,a)\). After an episode ends, the actual return \(G_t\) observed from a state is used as a sample target for updating the value estimate. In this sense, Monte Carlo methods are model-free learning methods.</p>
-<p>Temporal-Difference learning goes one step further. Like Monte Carlo, TD methods learn from sampled experience and do not require the environment model. However, unlike Monte Carlo, TD methods do not need to wait until the end of an episode. They update value estimates after each transition using a bootstrapped target, combining the immediate reward with the current estimate of the next state value.</p>
+<p>Dynamic Programming assumes that <strong>the environment model is known</strong>. In other words, we have access to the transition dynamics \(P(s’ \mid s,a)\) and the reward function \(r(s,a)\). With this model, we can compute Bellman backups by taking expectations over all possible next states. Therefore, Dynamic Programming is usually considered a planning method rather than a learning method.</p>
+<p>Monte Carlo methods remove the need for a known model. Instead of computing expectations using \(P(s’ \mid s,a)\), they estimate value functions from sampled episodes. After an episode ends, the complete return \(G_t\) observed from a state is used as a sample target for updating the value estimate. In this sense, Monte Carlo methods are model-free learning methods.</p>
+<p>Temporal-Difference learning also learns from sampled experience without requiring the environment model. However, unlike Monte Carlo, TD methods do not need to wait until the end of an episode. They update value estimates after each transition using a bootstrapped target, combining the immediate reward with the current estimate of the next state value.</p>
 <p>Therefore, the progression from DP to MC to TD can be summarized as follows:</p>
 <table>
 <thead>
@@ -74,10 +79,11 @@
 </tr>
 </tbody></table>
 <p>This gives a natural path:</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Dynamic Programming:</span><br><span class="line">known model -&gt; expected Bellman backup -&gt; planning</span><br><span class="line"></span><br><span class="line">Monte Carlo:</span><br><span class="line">unknown model -&gt; sampled complete return -&gt; model-free learning</span><br><span class="line"></span><br><span class="line">Temporal Difference:</span><br><span class="line">unknown model -&gt; sampled transition + bootstrapping -&gt; incremental model-free learning</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Dynamic Programming:</span><br><span class="line">known model -&gt; expected Bellman backup -&gt; planning</span><br><span class="line"></span><br><span class="line">Monte Carlo:</span><br><span class="line">unknown model -&gt; complete sampled return -&gt; model-free learning</span><br><span class="line"></span><br><span class="line">Temporal-Difference:</span><br><span class="line">unknown model -&gt; sampled transition + bootstrapping -&gt; incremental model-free learning</span><br></pre></td></tr></table></figure>
 
+<p>The main theme of this post is:</p>
 <blockquote>
-<p>This post studies how reinforcement learning methods move from model-based planning to model-free learning, and how value estimates are used to evaluate policies, improve decisions, and eventually approach optimal control.</p>
+<p>DP, MC, and TD can be viewed as three different ways to estimate \(V^\pi\): DP uses the known model, MC uses complete sampled returns, and TD uses one-step bootstrapped targets.</p>
 </blockquote>
 <h2 id="Dynamic-Programming"><a href="#Dynamic-Programming" class="headerlink" title="Dynamic Programming"></a>Dynamic Programming</h2><p>Dynamic Programming (DP) methods solve reinforcement learning problems by using a known MDP model. In other words, we assume that the transition probability \(P(s’ \mid s,a)\) and reward function \(r(s,a,s’)\) are available.</p>
 <p>The key idea is:</p>
@@ -240,8 +246,306 @@ $$
 </tr>
 </tbody></table>
 <p>Policy iteration keeps an explicit policy throughout the algorithm. Value iteration mainly updates the value function first and extracts the policy at the end.</p>
-<p>Both methods require the model \(P(s’ \mid s,a)\) and \(r(s,a,s’)\) and obtains \(\pi^*\) without interacting with the actual environment, so they are model-based planning methods.</p>
-</div><div class="article-licensing box"><div class="licensing-title"><p>2026-06-07-RLClassic</p><p><a href="http://gong208.github.io/2026/06/07/2026-06-07-RLClassic/">http://gong208.github.io/2026/06/07/2026-06-07-RLClassic/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Jiangshan Gong</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2026-06-07</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2026-06-16</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/RL/">RL</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2026/06/06/2026-06-06-RLPre/"><span class="level-item">2026-06-06-RLPre</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><script src="https://utteranc.es/client.js" repo="gong208/gong208.github.io" issue-term="pathname" label="comment" theme="github-light" crossorigin="anonymous" async></script></div></div></div><div class="column column-left is-3-tablet is-3-desktop is-3-widescreen  order-1"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-07T02:06:17.000Z">2026-06-07</time></p><p class="title"><a href="/2026/06/07/2026-06-07-RLClassic/">2026-06-07-RLClassic</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-06T02:06:17.000Z">2026-06-06</time></p><p class="title"><a href="/2026/06/06/2026-06-06-RLPre/">2026-06-06-RLPre</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-03T08:26:36.000Z">2026-06-03</time></p><p class="title"><a href="/2026/06/03/2026-06-03-SwingUpCartpole/">2026-06-03-SwingUpCartpole</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-01T03:47:22.000Z">2026-06-01</time></p><p class="title"><a href="/2026/06/01/2026-06-01-Slahmr-examples/">2026-06-01-Slahmr_examples</a></p><p class="categories"><a href="/categories/Research/">Research</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-05-03T15:40:14.000Z">2025-05-03</time></p><p class="title"><a href="/2025/05/03/2025-05-03-Scan/">2025-05-03-Scan</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Life/"><span class="level-start"><span class="level-item">Life</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/Research/"><span class="level-start"><span class="level-item">Research</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Study/"><span class="level-start"><span class="level-item">Study</span></span><span class="level-end"><span class="level-item tag">15</span></span></a></li></ul></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Overview-From-Planning-to-Learning"><span class="level-left"><span class="level-item">1</span><span class="level-item">Overview: From Planning to Learning</span></span></a></li><li><a class="level is-mobile" href="#Dynamic-Programming"><span class="level-left"><span class="level-item">2</span><span class="level-item">Dynamic Programming</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Policy-Iteration"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">Policy Iteration</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Policy-Evaluation"><span class="level-left"><span class="level-item">2.1.1</span><span class="level-item">Policy Evaluation</span></span></a></li><li><a class="level is-mobile" href="#Policy-Improvement"><span class="level-left"><span class="level-item">2.1.2</span><span class="level-item">Policy Improvement</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Value-Iteration"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">Value Iteration</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Jiangshan&#039;s Personal Website" height="28"></a><p class="is-size-7"><span>&copy; 2026 Jiangshan Gong</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+<p>Both methods require the model \(P(s’ \mid s,a)\) and \(r(s,a)\) and obtains \(\pi^*\) without interacting with the actual environment, so they are model-based planning methods.</p>
+<h2 id="Monte-Carlo-Methods"><a href="#Monte-Carlo-Methods" class="headerlink" title="Monte Carlo Methods"></a>Monte Carlo Methods</h2><p>Dynamic Programming requires a known environment model. In particular, DP policy evaluation needs access to \(P(s’ \mid s,a)\) and \(r(s,a)\) so that it can compute the Bellman expectation backup.</p>
+<p>Monte Carlo methods remove this requirement. Instead of computing expectations using the model, Monte Carlo methods estimate value functions from sampled episodes.</p>
+<p>In this section, we focus on <strong>Monte Carlo prediction</strong>:</p>
+<blockquote>
+<p>Given a fixed policy \(\pi\), estimate its state value function \(V^\pi\) from sampled episodes.</p>
+</blockquote>
+<p>Monte Carlo methods are model-free because they do not require the transition dynamics or reward function. They only require trajectories generated by following the policy \(\pi\).</p>
+<hr>
+<h3 id="Learning-from-Complete-Episodes"><a href="#Learning-from-Complete-Episodes" class="headerlink" title="Learning from Complete Episodes"></a>Learning from Complete Episodes</h3><p>Suppose the agent follows a fixed policy \(\pi\) and generates an episode:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S_0, A_0, R_0, S_1, A_1, R_1, ..., S_&#123;T-1&#125;, A_&#123;T-1&#125;, R_&#123;T-1&#125;, S_T</span><br></pre></td></tr></table></figure>
+
+<p>For each time step (t), the return is the discounted sum of rewards from that point onward:</p>
+
+$$
+G_t
+=
+R_t
++
+\gamma R_{t+1}
++
+\gamma^2 R_{t+2}
++
+\cdots
++
+\gamma^{T-t-1}R_{T-1}
+=
+\sum_{k=0}^{T-t-1}
+\gamma^k R_{t+k}
+$$
+
+
+<p>The state value function is defined as:</p>
+
+$$
+V^\pi(s)
+=
+\mathbb{E}_\pi
+[
+G_t \mid S_t=s
+]
+\approx
+\frac{1}{N}\sum_{i=1}^{N}G_t^{(i)}
+$$
+
+
+<p>Monte Carlo methods estimate this expectation by averaging sampled returns. Every time we visit a state \(s\), we can compute the return \(G_t\) from that time step and use it as a sample of \(V^\pi(s)\).</p>
+<p>The Monte Carlo target is: \(G_t\). This target is unbiased, because:</p>
+
+$$
+\mathbb{E}_\pi
+[
+G_t \mid S_t=s
+]
+=
+
+V^\pi(s)
+$$
+
+
+<p>However, Monte Carlo methods usually have high variance because \(G_t\) depends on all future rewards in the episode. A single sampled return may be much larger or smaller than the true expected value.</p>
+<p>Another important feature is that Monte Carlo methods need complete episodes. We cannot compute \(G_t\) until we know all future rewards after time \(t\).</p>
+<hr>
+<h3 id="Incremental-Monte-Carlo-Update"><a href="#Incremental-Monte-Carlo-Update" class="headerlink" title="Incremental Monte Carlo Update"></a>Incremental Monte Carlo Update</h3><p>Suppose we have observed returns \(G_1, G_2, \dots, G_n\) for a state \(s\). The empirical mean is:</p>
+
+$$
+V(s)
+=
+\frac{1}{n}
+\sum_{i=1}^{n} G^{(i)}
+$$
+
+
+<p>When a new return \(G^{(n+1)}\) is observed, the average can be updated incrementally:</p>
+
+$$
+V^n(s)
+=
+\frac{1}{n}
+\sum_{i=1}^{n} G^{(i)}
+=
+\frac{1}{n}
+\left[
+G^{(n)}
++
+\sum_{i=1}^{n-1} G^{(i)}
+\right]
+=
+\frac{1}{n}
+\left[
+G^{(n)}
++
+(n-1)V^{n-1}
+\right]
+=
+\frac{1}{n}
+\left[
+G^{(n)}
++
+nV^{n-1} - V^{n-1}
+\right]
+=
+V^{n-1}(s)
++
+\frac{1}{n}
+\left[
+G_n - V^{n-1}(s)
+\right]
+$$
+
+
+<p>This has the same form as many RL update rules:</p>
+
+$$
+\text{new estimate}
+=
+\text{old estimate}
++
+\text{step size}
+\cdot
+(
+\text{target}
+-
+\text{old estimate}
+)
+$$
+
+
+<p>For Monte Carlo prediction, the target is the complete return (G_t):</p>
+
+$$
+V(S_t)
+\leftarrow
+V(S_t)
++
+\alpha
+\left[
+G_t - V(S_t)
+\right]
+$$
+
+
+<p>If we use \(\alpha &#x3D; \frac{1}{N(S_t)}\), this update is equivalent to computing the sample average of all observed returns for state \(S_t\).</p>
+<p>The main idea of Monte Carlo prediction is therefore:</p>
+<blockquote>
+<p>To estimate \(V^\pi(s)\), run episodes under policy \(\pi\), compute complete returns \(G_t\), and move \(V(S_t)\) toward those returns.</p>
+</blockquote>
+<p>Monte Carlo prediction is model-free and unbiased, but it requires complete episodes and can have high variance.</p>
+<h2 id="Temporal-Difference-Learning"><a href="#Temporal-Difference-Learning" class="headerlink" title="Temporal-Difference Learning"></a>Temporal-Difference Learning</h2><p>Monte Carlo methods estimate \(V^\pi\) using complete returns from full episodes. This removes the need for a known model, but it also means that Monte Carlo methods have to wait until the end of an episode before updating the value estimate.</p>
+<p>Temporal-Difference (TD) learning removes this requirement. TD methods learn from sampled experience like Monte Carlo methods, but they update the value function after each transition instead of waiting for a full episode.</p>
+<p>In this section, we focus on <strong>TD prediction</strong>:</p>
+<blockquote>
+<p>Given a fixed policy \(\pi\), estimate its state value function \(V^\pi\) from sampled transitions.</p>
+</blockquote>
+<p>TD learning is model-free because it does not require \(P(s’ \mid s,a)\) or \(r(s,a)\). It only needs sampled transitions generated by following policy \(\pi\).</p>
+<p>A sampled transition has the form:</p>
+<figure class="highlight text"><figcaption><span>id</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S_t, A_t, R_t, S_&#123;t+1&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="One-Step-TD-Prediction"><a href="#One-Step-TD-Prediction" class="headerlink" title="One-Step TD Prediction"></a>One-Step TD Prediction</h3><p>The Monte Carlo update is:</p>
+
+$$
+V(S_t)
+\leftarrow
+V(S_t)
++
+\alpha
+\left[
+G_t - V(S_t)
+\right]
+$$
+
+
+<p>TD prediction replaces the complete return \(G_t\) with a one-step bootstrapped target: \(R_t + \gamma V(S_{t+1})\)</p>
+<p>Therefore, the TD(0) update is:</p>
+
+$$
+V(S_t)
+\leftarrow
+V(S_t)
++
+\alpha
+\left[
+R_t
++
+\gamma V(S_{t+1})
+-
+V(S_t)
+\right]
+$$
+
+
+
+<p>This target contains two parts:</p>
+<ol>
+<li>the sampled immediate reward \(R_t\);</li>
+<li>the current estimate of the next state’s value \(V(S_{t+1})\).</li>
+</ol>
+<p>This is called <strong>bootstrapping</strong> because the update target depends on the current value estimate itself.</p>
+<p>The important difference from Monte Carlo is that TD updates immediately after observing one transition.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Monte Carlo:</span><br><span class="line">wait until the episode ends -&gt; compute G_t -&gt; update V(S_t)</span><br><span class="line"></span><br><span class="line">Temporal Difference:</span><br><span class="line">observe one transition -&gt; compute R_t + gamma V(S_&#123;t+1&#125;) -&gt; update V(S_t)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="TD-Error"><a href="#TD-Error" class="headerlink" title="TD Error"></a>TD Error</h3><p>The difference between the TD target and the current value estimate is called the <strong>TD error</strong>.</p>
+<p>For TD(0), the TD error is:</p>
+
+$$
+\delta_t
+=
+R_t
++
+\gamma V(S_{t+1})
+-
+V(S_t)
+$$
+
+
+<p>Then the TD update can be written more compactly as:</p>
+
+$$
+V(S_t)
+\leftarrow
+V(S_t)
++
+\alpha \delta_t
+$$
+
+
+<p>The TD error measures how surprising the transition is under the current value estimate.</p>
+<p>If \(\delta_t &gt; 0\), then the observed reward and next-state value are better than expected, so \(V(S_t)\) should increase.</p>
+<p>If \(\delta_t &lt; 0\), then the observed reward and next-state value are worse than expected, so \(V(S_t)\) should decrease.</p>
+<p>If \(\delta_t &#x3D; 0\), then the current estimate is consistent with this one-step transition.</p>
+<p>TD learning can also be viewed as a sample-based approximation to the Bellman expectation backup. For a fixed policy \(\pi\), the Bellman expectation operator is:</p>
+
+$$
+(T^\pi V)(s)
+=
+\mathbb{E}_\pi
+\left[
+R_t + \gamma V(S_{t+1})
+\mid S_t=s
+\right]
+$$
+
+
+<p>Which is eaxctly the expected value of the TD target</p>
+
+$$
+R_t + \gamma V(S_{t+1})
+$$
+
+
+<hr>
+<h3 id="TD-as-a-Bridge-Between-DP-and-MC"><a href="#TD-as-a-Bridge-Between-DP-and-MC" class="headerlink" title="TD as a Bridge Between DP and MC"></a>TD as a Bridge Between DP and MC</h3><p>Temporal-Difference learning is often described as a bridge between Dynamic Programming and Monte Carlo methods.</p>
+<p>Like Monte Carlo, TD learns from sampled experience. It does not need the transition model \(P(s’ \mid s,a)\), the reward model \(r(s,a)\), or a full enumeration of possible next states.</p>
+<p>Like Dynamic Programming, TD uses bootstrapping. It updates the value of a state using the current estimate of the next state’s value.</p>
+<p>This gives the following comparison:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th align="right">Requires model?</th>
+<th>Update target</th>
+<th align="right">Uses bootstrapping?</th>
+<th align="right">Waits until episode ends?</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Dynamic Programming</td>
+<td align="right">Yes</td>
+<td>Expected Bellman backup</td>
+<td align="right">Yes</td>
+<td align="right">No</td>
+</tr>
+<tr>
+<td>Monte Carlo</td>
+<td align="right">No</td>
+<td>Complete return \(G_t\)</td>
+<td align="right">No</td>
+<td align="right">Yes</td>
+</tr>
+<tr>
+<td>Temporal-Difference</td>
+<td align="right">No</td>
+<td>\(R_t + \gamma V(S_{t+1})\)</td>
+<td align="right">Yes</td>
+<td align="right">No</td>
+</tr>
+</tbody></table>
+<p>The TD target is generally biased because it depends on the current estimate \(V(S_{t+1})\), which may not yet be accurate. In contrast, the Monte Carlo return \(G_t\) is an unbiased sample of \(V^\pi(S_t)\).</p>
+<p>However, TD usually has lower variance than Monte Carlo because it only uses one sampled reward and one next-state value estimate, rather than the entire future trajectory.</p>
+<p>So the main tradeoff is:</p>
+<figure class="highlight text"><figcaption><span>id</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Monte Carlo:</span><br><span class="line">unbiased target, higher variance, must wait until episode ends</span><br><span class="line"></span><br><span class="line">Temporal Difference:</span><br><span class="line">biased bootstrapped target, lower variance, can update after every transition</span><br></pre></td></tr></table></figure>
+
+<p>The main idea of TD prediction is therefore:</p>
+<blockquote>
+<p>To estimate \(V^\pi(s)\), observe one transition at a time and move \(V(S_t)\) toward the one-step bootstrapped target \(R_t + \gamma V(S_{t+1})\).</p>
+</blockquote>
+<p>This makes TD learning more incremental than Monte Carlo methods and more practical for long or continuing tasks.</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>2026-06-07-RLClassic</p><p><a href="http://gong208.github.io/2026/06/07/2026-06-07-RLClassic/">http://gong208.github.io/2026/06/07/2026-06-07-RLClassic/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Jiangshan Gong</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2026-06-07</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2026-06-17</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/RL/">RL</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2026/06/06/2026-06-06-RLPre/"><span class="level-item">2026-06-06-RLPre</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><script src="https://utteranc.es/client.js" repo="gong208/gong208.github.io" issue-term="pathname" label="comment" theme="github-light" crossorigin="anonymous" async></script></div></div></div><div class="column column-left is-3-tablet is-3-desktop is-3-widescreen  order-1"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-07T02:06:17.000Z">2026-06-07</time></p><p class="title"><a href="/2026/06/07/2026-06-07-RLClassic/">2026-06-07-RLClassic</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-06T02:06:17.000Z">2026-06-06</time></p><p class="title"><a href="/2026/06/06/2026-06-06-RLPre/">2026-06-06-RLPre</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-03T08:26:36.000Z">2026-06-03</time></p><p class="title"><a href="/2026/06/03/2026-06-03-SwingUpCartpole/">2026-06-03-SwingUpCartpole</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-01T03:47:22.000Z">2026-06-01</time></p><p class="title"><a href="/2026/06/01/2026-06-01-Slahmr-examples/">2026-06-01-Slahmr_examples</a></p><p class="categories"><a href="/categories/Research/">Research</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-05-03T15:40:14.000Z">2025-05-03</time></p><p class="title"><a href="/2025/05/03/2025-05-03-Scan/">2025-05-03-Scan</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Life/"><span class="level-start"><span class="level-item">Life</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/Research/"><span class="level-start"><span class="level-item">Research</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Study/"><span class="level-start"><span class="level-item">Study</span></span><span class="level-end"><span class="level-item tag">15</span></span></a></li></ul></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Overview-From-Planning-to-Learning"><span class="level-left"><span class="level-item">1</span><span class="level-item">Overview: From Planning to Learning</span></span></a></li><li><a class="level is-mobile" href="#Dynamic-Programming"><span class="level-left"><span class="level-item">2</span><span class="level-item">Dynamic Programming</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Policy-Iteration"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">Policy Iteration</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Policy-Evaluation"><span class="level-left"><span class="level-item">2.1.1</span><span class="level-item">Policy Evaluation</span></span></a></li><li><a class="level is-mobile" href="#Policy-Improvement"><span class="level-left"><span class="level-item">2.1.2</span><span class="level-item">Policy Improvement</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Value-Iteration"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">Value Iteration</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Monte-Carlo-Methods"><span class="level-left"><span class="level-item">3</span><span class="level-item">Monte Carlo Methods</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Learning-from-Complete-Episodes"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">Learning from Complete Episodes</span></span></a></li><li><a class="level is-mobile" href="#Incremental-Monte-Carlo-Update"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">Incremental Monte Carlo Update</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Temporal-Difference-Learning"><span class="level-left"><span class="level-item">4</span><span class="level-item">Temporal-Difference Learning</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#One-Step-TD-Prediction"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">One-Step TD Prediction</span></span></a></li><li><a class="level is-mobile" href="#TD-Error"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">TD Error</span></span></a></li><li><a class="level is-mobile" href="#TD-as-a-Bridge-Between-DP-and-MC"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">TD as a Bridge Between DP and MC</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Jiangshan&#039;s Personal Website" height="28"></a><p class="is-size-7"><span>&copy; 2026 Jiangshan Gong</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {
                     clipboard: true,
