@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>PPO vs GRPO — Post-Training Qwen2.5-0.5B-Instruct on GSM8K with veRL - Jiangshan&#039;s Personal Website</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Jiangshan&#039;s Personal Website"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jiangshan&#039;s Personal Website"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Comparing PPO and GRPO for post-training Qwen2.5-0.5B-Instruct on GSM8K with veRL, focusing on a small-model, verifiable-reward setting where the reward is rule-based correctness rather than a learned"><meta property="og:type" content="blog"><meta property="og:title" content="PPO vs GRPO — Post-Training Qwen2.5-0.5B-Instruct on GSM8K with veRL"><meta property="og:url" content="http://gong208.github.io/2026/06/10/2026-06-10-PPOTraining/"><meta property="og:site_name" content="Jiangshan&#039;s Personal Website"><meta property="og:description" content="Comparing PPO and GRPO for post-training Qwen2.5-0.5B-Instruct on GSM8K with veRL, focusing on a small-model, verifiable-reward setting where the reward is rule-based correctness rather than a learned"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://gong208.github.io/img/og_image.png"><meta property="article:published_time" content="2026-06-10T02:06:17.000Z"><meta property="article:modified_time" content="2026-07-01T08:22:33.503Z"><meta property="article:author" content="Jiangshan Gong"><meta property="article:tag" content="RL"><meta property="article:tag" content="LLM"><meta property="article:tag" content="PPO"><meta property="article:tag" content="GRPO"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://gong208.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://gong208.github.io/2026/06/10/2026-06-10-PPOTraining/"},"headline":"Jiangshan Gong","image":["http://gong208.github.io/img/og_image.png"],"datePublished":"2026-06-10T02:06:17.000Z","dateModified":"2026-07-01T08:22:33.503Z","author":{"@type":"Person","name":"Jiangshan Gong"},"publisher":{"@type":"Organization","name":"Jiangshan's Personal Website","logo":{"@type":"ImageObject","url":"http://gong208.github.io/img/logo.svg"}},"description":"This is Jiangshan Gong&#39;s personal website"}</script><link rel="canonical" href="http://gong208.github.io/2026/06/10/2026-06-10-PPOTraining/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Jiangshan&#039;s Personal Website" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/Blog">Blog</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/About">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2026-06-10T02:06:17.000Z" title="6/10/2026, 10:06:17 AM">2026-06-10</time></span><span class="level-item">Updated&nbsp;<time dateTime="2026-07-01T08:22:33.503Z" title="7/1/2026, 4:22:33 PM">2026-07-01</time></span><span class="level-item"><a class="link-muted" href="/categories/Study-Experiment/">Study Experiment</a></span><span class="level-item">16 minutes read (About 2394 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">PPO vs GRPO — Post-Training Qwen2.5-0.5B-Instruct on GSM8K with veRL</h1><div class="content"><p>This post compares <strong>PPO</strong> and <strong>GRPO</strong> for post-training <code>Qwen2.5-0.5B-Instruct</code> on the GSM8K mathematical reasoning benchmark using <a target="_blank" rel="noopener" href="https://github.com/volcengine/verl">veRL</a>.</p>
+<p>On <code>Qwen2.5-0.5B-Instruct</code> trained on GSM8K with a rule-based verifiable correctness reward, PPO and GRPO reach very similar test accuracy, while GRPO trains faster without a critic network.</p>
+<p>Concretely:</p>
+<ul>
+<li>The base model scores <strong>45.19%</strong> on GSM8K under the final evaluation pipeline.</li>
+<li>PPO improves it to <strong>58.83%</strong>.</li>
+<li>GRPO improves it to <strong>57.47%</strong>.</li>
+<li>GRPO trains <strong>~23% faster</strong> and processes <strong>~33% more tokens per second</strong> than PPO training.</li>
+</ul>
+<hr>
+<h2 id="Why-Compare-PPO-and-GRPO"><a href="#Why-Compare-PPO-and-GRPO" class="headerlink" title="Why Compare PPO and GRPO?"></a>Why Compare PPO and GRPO?</h2><p>PPO is a standard RL algorithm used in many RLHF pipelines. In the LLM setting, PPO usually trains an actor model and a critic model together:</p>
+<ul>
+<li>the <strong>actor</strong> generates responses;</li>
+<li>the <strong>critic</strong> predicts the expected future return;</li>
+<li>the critic is used to estimate the advantage for policy optimization.</li>
+</ul>
+<p>This critic is useful because it provides a learned baseline \(V(s)\). However, it also adds cost: it is another model to store, train, and update.</p>
+<p>GRPO removes this critic. Instead of learning a value baseline, it samples multiple responses for the same prompt and compares each response against the group’s average reward. The advantage is computed from relative performance inside the group.</p>
+<p>In other words:</p>
+<table>
+  <thead>
+    <tr>
+      <th align="left">Method</th>
+      <th align="left">Advantage estimate</th>
+      <th align="left">Baseline for advantage estimation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PPO</td>
+      <td>\(\hat{A}_t = \hat{V}_t - V_\phi(s_t)\), usually computed with GAE</td>
+      <td>learned value function / critic</td>
+    </tr>
+    <tr>
+      <td>GRPO</td>
+      <td>\(\hat{A}_i = (R_i - \operatorname{mean}(R)) / \operatorname{std}(R)\) within the sampled group</td>
+      <td>mean reward of the sampled group</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This makes GRPO attractive for LLM reasoning tasks, especially when the reward is easy to verify. GSM8K is exactly such a setting: the final answer can be extracted and compared with the ground-truth answer.</p>
+<p>Additionally with the verifiable reward, this experiment does not require a learned reward model. Both PPO and GRPO optimize the same rule-based correctness reward on correctness.</p>
+<hr>
+<h2 id="Training-and-Evaluation-Setup"><a href="#Training-and-Evaluation-Setup" class="headerlink" title="Training and Evaluation Setup"></a>Training and Evaluation Setup</h2><h3 id="Experiment-Setup"><a href="#Experiment-Setup" class="headerlink" title="Experiment Setup"></a>Experiment Setup</h3><p>Both PPO and GRPO were trained inside the same veRL pipeline.</p>
+<p>The controlled variables were:</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Model</td>
+<td>Qwen2.5-0.5B-Instruct</td>
+</tr>
+<tr>
+<td>Dataset</td>
+<td>GSM8K train &#x2F; test</td>
+</tr>
+<tr>
+<td>Train set size</td>
+<td>7,473 problems</td>
+</tr>
+<tr>
+<td>Test set size</td>
+<td>1,319 problems</td>
+</tr>
+<tr>
+<td>Framework</td>
+<td>veRL 0.5.0 + vLLM 0.10</td>
+</tr>
+<tr>
+<td>Hardware</td>
+<td>Single NVIDIA L40S, 48 GB</td>
+</tr>
+<tr>
+<td>Epochs</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Optimizer steps</td>
+<td>1,160</td>
+</tr>
+<tr>
+<td>Train batch size</td>
+<td>128 prompts</td>
+</tr>
+<tr>
+<td>PPO mini-batch size</td>
+<td>64</td>
+</tr>
+<tr>
+<td>Samples per prompt</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Max prompt length</td>
+<td>512 tokens</td>
+</tr>
+<tr>
+<td>Max response length</td>
+<td>256 tokens</td>
+</tr>
+<tr>
+<td>Actor learning rate</td>
+<td>1e-6</td>
+</tr>
+<tr>
+<td>KL regularization</td>
+<td>actor-side KL loss against reference model</td>
+</tr>
+<tr>
+<td>KL coefficient</td>
+<td>0.001</td>
+</tr>
+<tr>
+<td>KL type</td>
+<td><code>low_var_kl</code></td>
+</tr>
+<tr>
+<td>Clip ratio</td>
+<td>0.2</td>
+</tr>
+<tr>
+<td>Entropy coefficient</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Reward</td>
+<td>correctness only</td>
+</tr>
+</tbody></table>
+<p>The optimized reward is binary correctness:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">score = 1 if the extracted answer matches the ground truth</span><br><span class="line">score = 0 otherwise</span><br></pre></td></tr></table></figure>
+
+<p>A format flag is also computed and logged, but it is not added to the optimized score. Therefore, the training reward does not explicitly reward length, style, or answer formatting beyond whatever is needed for the answer extractor to identify the final answer.</p>
+<p>The only intended algorithmic difference between the two runs is the advantage estimator:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>PPO</th>
+<th>GRPO</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Advantage estimator</td>
+<td>GAE</td>
+<td>group-relative baseline</td>
+</tr>
+<tr>
+<td>Critic network</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Critic learning rate</td>
+<td>1e-5</td>
+<td>N&#x2F;A</td>
+</tr>
+<tr>
+<td>Advantage baseline</td>
+<td>learned value function</td>
+<td>mean reward over 4 responses for the same prompt</td>
+</tr>
+</tbody></table>
+<p>The equal sampling budget matters. PPO is often run with one response per prompt, while GRPO naturally requires multiple responses per prompt. Here, both methods use <code>rollout.n = 4</code>, so the comparison focuses on the advantage estimator rather than simply giving GRPO more samples.</p>
+<hr>
+<h3 id="Evaluation-Protocol"><a href="#Evaluation-Protocol" class="headerlink" title="Evaluation Protocol"></a>Evaluation Protocol</h3><p>The final comparison uses the same evaluation harness for all three models:</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Models evaluated</td>
+<td>base, PPO, GRPO</td>
+</tr>
+<tr>
+<td>Dataset</td>
+<td>GSM8K test set</td>
+</tr>
+<tr>
+<td>Number of problems</td>
+<td>1,319</td>
+</tr>
+<tr>
+<td>Prompting</td>
+<td>0-shot</td>
+</tr>
+<tr>
+<td>Decoding</td>
+<td>greedy</td>
+</tr>
+<tr>
+<td>Max response length</td>
+<td>512 tokens</td>
+</tr>
+<tr>
+<td>Precision</td>
+<td>bf16</td>
+</tr>
+<tr>
+<td>Scoring</td>
+<td>same answer matcher as the training reward</td>
+</tr>
+</tbody></table>
+<p>The base model is evaluated through the same pipeline as PPO and GRPO, except without any RL training. This makes the three-way comparison directly comparable.</p>
+<hr>
+<h2 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h2><h3 id="Accuracy-Results"><a href="#Accuracy-Results" class="headerlink" title="Accuracy Results"></a>Accuracy Results</h3><table>
+<thead>
+<tr>
+<th>Model</th>
+<th align="right">GSM8K test accuracy</th>
+<th align="right">Correct &#x2F; total</th>
+<th align="right">Improvement over base</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Qwen2.5-0.5B-Instruct</td>
+<td align="right">45.19%</td>
+<td align="right">596 &#x2F; 1319</td>
+<td align="right">—</td>
+</tr>
+<tr>
+<td>PPO</td>
+<td align="right">58.83%</td>
+<td align="right">776 &#x2F; 1319</td>
+<td align="right">+13.64 pts</td>
+</tr>
+<tr>
+<td>GRPO</td>
+<td align="right">57.47%</td>
+<td align="right">758 &#x2F; 1319</td>
+<td align="right">+12.28 pts</td>
+</tr>
+</tbody></table>
+<p>Both PPO and GRPO substantially improve over the base model.</p>
+<p>PPO is the highest single run, but the gap between PPO and GRPO is small:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PPO - GRPO = 58.83% - 57.47% = 1.36 percentage points</span><br></pre></td></tr></table></figure>
+
+<p>This corresponds to 18 more correct answers out of 1,319 test problems.</p>
+<p>I would not over-interpret this gap. This is a single-run comparison on one model size and one dataset. Without multiple random seeds or a paired significance test, the result is better read as:</p>
+<blockquote>
+<p>PPO and GRPO have very similar final accuracy in this setting.</p>
+</blockquote>
+<p>Best in-training validation accuracy was also close:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th align="right">Best validation accuracy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PPO</td>
+<td align="right">59.14%</td>
+</tr>
+<tr>
+<td>GRPO</td>
+<td align="right">58.76%</td>
+</tr>
+</tbody></table>
+<p>So the training dynamics and final test results tell the same story: both algorithms improve the model substantially, and their final quality is very close.</p>
+<hr>
+<h3 id="Training-Cost-Results"><a href="#Training-Cost-Results" class="headerlink" title="Training Cost Results"></a>Training Cost Results</h3><p>The main difference is training cost.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th align="right">PPO</th>
+<th align="right">GRPO</th>
+<th align="right">GRPO vs PPO</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Wall-clock time</td>
+<td align="right">8.47 h</td>
+<td align="right">6.49 h</td>
+<td align="right">−23%</td>
+</tr>
+<tr>
+<td>GPU-hours</td>
+<td align="right">8.47</td>
+<td align="right">6.49</td>
+<td align="right">−23%</td>
+</tr>
+<tr>
+<td>Estimated cost at $1.50 &#x2F; GPU-h</td>
+<td align="right">$12.71</td>
+<td align="right">$9.74</td>
+<td align="right">−23%</td>
+</tr>
+<tr>
+<td>Median throughput</td>
+<td align="right">6,138 tok&#x2F;s</td>
+<td align="right">8,192 tok&#x2F;s</td>
+<td align="right">+33%</td>
+</tr>
+</tbody></table>
+<p>GRPO is faster because it does not train a critic. PPO spends part of each training step updating the value model, including critic forward passes, backward passes, and optimizer steps. GRPO replaces this learned value baseline with a simple group-level reward baseline.</p>
+<p>In this experiment, PPO’s critic did not produce enough measurable accuracy gain to justify that additional training cost.</p>
+<p>A careful version of the conclusion is:</p>
+<blockquote>
+<p>On Qwen2.5-0.5B-Instruct trained on GSM8K with a verifiable correctness reward, GRPO is the more cost-effective choice. It reaches nearly the same accuracy as PPO while avoiding the critic update.</p>
+</blockquote>
+<hr>
+<h3 id="Memory-Results"><a href="#Memory-Results" class="headerlink" title="Memory Results"></a>Memory Results</h3><p>The memory picture is slightly subtle.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th align="right">PPO</th>
+<th align="right">GRPO</th>
+<th align="right">Difference</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Peak GPU memory from <code>nvidia-smi</code></td>
+<td align="right">47.36 GB</td>
+<td align="right">47.31 GB</td>
+<td align="right">~0 GB</td>
+</tr>
+<tr>
+<td>Torch max allocated</td>
+<td align="right">50.71 GB</td>
+<td align="right">45.19 GB</td>
+<td align="right">−5.52 GB</td>
+</tr>
+</tbody></table>
+<p>The physical peak reported by <code>nvidia-smi</code> looks almost identical. This is likely because the vLLM rollout engine reserves a large fixed memory region, so both runs appear to fill most of the GPU.</p>
+<p>The PyTorch max-allocated metric shows a clearer difference: GRPO uses about <strong>5.5 GB</strong> less working memory. This is consistent with the algorithmic difference: PPO has to maintain and update a critic model, while GRPO does not.</p>
+<p>At the 0.5B scale, this memory saving is real but not decisive because both methods fit on a single L40S. At larger model sizes, dropping the critic may become more important.</p>
+<hr>
+<h3 id="Inference-Profile"><a href="#Inference-Profile" class="headerlink" title="Inference Profile"></a>Inference Profile</h3><p>After training, I also profiled the final models on the GSM8K test set using batched vLLM greedy decoding with the same prompts.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th align="right">Avg output tokens</th>
+<th align="right">Total generation time</th>
+<th align="right">Decode throughput</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Base</td>
+<td align="right">296.8</td>
+<td align="right">17.0 s</td>
+<td align="right">23,047 tok&#x2F;s</td>
+</tr>
+<tr>
+<td>PPO</td>
+<td align="right">158.7</td>
+<td align="right">10.4 s</td>
+<td align="right">20,127 tok&#x2F;s</td>
+</tr>
+<tr>
+<td>GRPO</td>
+<td align="right">152.8</td>
+<td align="right">9.7 s</td>
+<td align="right">20,846 tok&#x2F;s</td>
+</tr>
+</tbody></table>
+<p>The most interesting difference is output length. Both RL-trained models generate much shorter answers than the base model:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Base: ~297 tokens</span><br><span class="line">PPO:  ~159 tokens</span><br><span class="line">GRPO: ~153 tokens</span><br></pre></td></tr></table></figure>
+
+<p>So PPO and GRPO roughly halve the response length.</p>
+<p>This conciseness was not explicitly rewarded. The reward only checks correctness. However, the training response budget is limited to 256 tokens. A verbose solution is more likely to be truncated before reaching the final answer, which receives zero reward. As a result, the model is indirectly pushed toward shorter and more decisive reasoning.</p>
+<p>This is an emergent side effect of the reward and length constraint, not a direct length penalty.</p>
+<hr>
+<h3 id="Qualitative-Result"><a href="#Qualitative-Result" class="headerlink" title="Qualitative Result"></a>Qualitative Result</h3><p>The quantitative results show that RL improves accuracy. A qualitative example helps show what kind of behavior changes.</p>
+<p>The following example comes from an earlier sanity-check evaluation comparing the base model and a PPO-trained model. Both models received the same 4-shot chain-of-thought prompt followed by this GSM8K question:</p>
+<blockquote>
+<p>Janet’s ducks lay 16 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with four. She sells the remainder at the farmers’ market daily for 2 dollars per fresh duck egg. How much in dollars does she make every day at the farmers’ market?</p>
+</blockquote>
+<p>The correct solution is:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">16 eggs total</span><br><span class="line">3 eggs eaten for breakfast</span><br><span class="line">4 eggs used for muffins</span><br><span class="line">16 - 3 - 4 = 9 eggs sold</span><br><span class="line">9 * 2 = 18 dollars</span><br></pre></td></tr></table></figure>
+
+<p>So the correct answer is 18.</p>
+<h4 id="Base-model-output"><a href="#Base-model-output" class="headerlink" title="Base model output"></a>Base model output</h4><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">To determine how much Janet makes every day at the farmers&#x27; market, we need to follow these steps:</span><br><span class="line"></span><br><span class="line">1. Calculate the number of eggs laid by the ducks each day.</span><br><span class="line">2. Determine the total revenue from selling the eggs.</span><br><span class="line"></span><br><span class="line">**Step 1: Calculate the number of eggs laid by the ducks each day.**</span><br><span class="line"></span><br><span class="line">Janet&#x27;s ducks lay 16 eggs per day.</span><br><span class="line"></span><br><span class="line">**Step 2: Determine the total revenue from selling the eggs.**</span><br><span class="line"></span><br><span class="line">Janet sells the eggs at $2 per fresh duck egg. Therefore, the total revenue is calculated as follows:</span><br><span class="line"></span><br><span class="line">Total Revenue = Number of Eggs Laid Each Day × Price per Egg</span><br><span class="line"></span><br><span class="line">Substituting the values:</span><br><span class="line"></span><br><span class="line">Total Revenue = 16 × 2 = 32</span><br><span class="line"></span><br><span class="line">Thus, Janet makes \boxed&#123;32&#125; dollars every day at the farmers&#x27; market.</span><br></pre></td></tr></table></figure>
+
+<p>The base model gives the wrong answer, 32. It identifies the number of eggs laid and the price per egg, but skips the subtraction step. It ignores the eggs eaten for breakfast and the eggs used for muffins.</p>
+<p>This is a typical reasoning shortcut: the response looks structured, but the actual computation is incomplete.</p>
+<h4 id="PPO-model-output"><a href="#PPO-model-output" class="headerlink" title="PPO model output"></a>PPO model output</h4><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">First, we need to calculate the total number of eggs Janet lays in a day. She lays 16 eggs per day.</span><br><span class="line"></span><br><span class="line">Next, we calculate the total number of eggs she eats in a day. She eats 3 eggs for breakfast and 4 eggs baking muffins,</span><br><span class="line">so she eats 3 + 4 = 7 eggs per day.</span><br><span class="line"></span><br><span class="line">Subtracting the number of eggs she eats from the total number of eggs she lays gives us the number of eggs she sells:</span><br><span class="line">16 - 7 = 9 eggs per day.</span><br><span class="line"></span><br><span class="line">She sells each egg for $2, so the total revenue she makes every day is 9 × 2 = 18 dollars.</span><br><span class="line"></span><br><span class="line">Therefore, the amount she makes every day at the farmers&#x27; market is \boxed&#123;18&#125;.</span><br></pre></td></tr></table></figure>
+
+<p>The PPO model gives the correct answer, 18. It accounts for all consumed eggs before calculating revenue.</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Base model</th>
+<th>PPO model</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Final answer</td>
+<td>wrong</td>
+<td>correct</td>
+</tr>
+<tr>
+<td>Main error</td>
+<td>skips subtraction</td>
+<td>accounts for consumed eggs</td>
+</tr>
+<tr>
+<td>Reasoning style</td>
+<td>verbose but incomplete</td>
+<td>concise and complete</td>
+</tr>
+<tr>
+<td>Format</td>
+<td>includes final boxed answer</td>
+<td>includes final boxed answer</td>
+</tr>
+</tbody></table>
+<p>This example should not be treated as proof by itself, but it illustrates the same trend as the aggregate results: RL training reduces some reasoning shortcuts and encourages the model to complete the necessary arithmetic steps.</p>
+<hr>
+<h2 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h2><h3 id="Why-This-Setting-Favors-GRPO"><a href="#Why-This-Setting-Favors-GRPO" class="headerlink" title="Why This Setting Favors GRPO"></a>Why This Setting Favors GRPO</h3><p>GSM8K is a verifiable-reward task. The final answer can be extracted and compared against the ground-truth answer. Therefore, neither PPO nor GRPO needs a learned reward model in this experiment.</p>
+<p>This matters because the reward is cheap and direct:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">answer matches ground truth → reward 1</span><br><span class="line">answer does not match → reward 0</span><br></pre></td></tr></table></figure>
+
+<p>In this setting, GRPO has a natural advantage. It can sample several responses for the same prompt and compare them using the rule-based reward. If one response is correct and another is wrong, the group-relative advantage provides a useful learning signal without needing a critic.</p>
+<p>PPO also uses the same rule-based reward. However, PPO still trains a critic to estimate expected future return. The critic is not the reward model. It does not decide whether the answer is correct. Instead, it tries to predict the expected return from a partial generation state.</p>
+<p>So the comparison here is not:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">learned reward model vs rule-based reward</span><br></pre></td></tr></table></figure>
+
+<p>Both methods use the same rule-based reward.</p>
+<p>The comparison is:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">learned value baseline vs group-relative reward baseline</span><br></pre></td></tr></table></figure>
+
+<p>In this experiment, the group-relative baseline is sufficient.</p>
+<p>However, this conclusion may not transfer to harder settings where:</p>
+<ul>
+<li>the reward is noisy;</li>
+<li>the reward comes from a learned preference model;</li>
+<li>correctness is not directly verifiable;</li>
+<li>the task requires long-horizon credit assignment;</li>
+<li>there are many partially correct answers;</li>
+<li>the model scale is much larger;</li>
+<li>training stability matters more than final single-run accuracy.</li>
+</ul>
+<p>In those cases, PPO’s critic may still provide useful variance reduction or stability.</p>
+<hr>
+<h3 id="Limitations"><a href="#Limitations" class="headerlink" title="Limitations"></a>Limitations</h3><p>This experiment has several important limitations.</p>
+<p>First, it uses only one model size: <code>Qwen2.5-0.5B-Instruct</code>. The result may change for larger models. A critic may become more or less useful depending on model scale, batch size, reward quality, and training stability.</p>
+<p>Second, it uses only one dataset: GSM8K. GSM8K has short math word problems with verifiable final answers. This is very different from open-ended helpfulness, instruction following, dialogue, coding style, safety, or preference optimization.</p>
+<p>Third, the reward is binary and rule-based. This makes the experiment clean, but it also removes many complications of RLHF. In real preference-based RLHF, the reward model can be imperfect, and the critic may behave differently.</p>
+<p>Fourth, this is a single-run comparison. PPO is higher than GRPO by 18 problems on the test set, but without multiple seeds or a paired significance test, I would not claim that PPO is meaningfully better.</p>
+<p>Finally, both PPO and GRPO use <code>rollout.n = 4</code>. This is useful for fairness because both methods receive the same sampling budget, but it is not necessarily the most common or most efficient PPO configuration.</p>
+<hr>
+<h3 id="Takeaways"><a href="#Takeaways" class="headerlink" title="Takeaways"></a>Takeaways</h3><ol>
+<li><p><strong>Both PPO and GRPO substantially improve the base model.</strong><br>On GSM8K, the base model scores 45.19%, while PPO reaches 58.83% and GRPO reaches 57.47%.</p>
+</li>
+<li><p><strong>PPO and GRPO have very similar final accuracy in this setting.</strong><br>PPO is higher by 1.36 percentage points, or 18 problems out of 1,319. This is a small single-run gap, not strong evidence that PPO is fundamentally better here.</p>
+</li>
+<li><p><strong>GRPO is cheaper.</strong><br>GRPO trains about 23% faster and reaches 33% higher median throughput because it removes the critic update.</p>
+</li>
+<li><p><strong>The critic does not buy much measurable accuracy here.</strong><br>In this specific small-model, verifiable-reward GSM8K setup, PPO’s learned value function does not provide enough accuracy gain to justify its extra cost.</p>
+</li>
+<li><p><strong>This does not mean critics are generally unnecessary.</strong><br>The conclusion is specific to <code>Qwen2.5-0.5B-Instruct</code>, GSM8K, rule-based correctness reward, and equal sampling budget. For noisy, preference-based, non-verifiable, or long-horizon tasks, PPO’s critic may still be useful.</p>
+</li>
+<li><p><strong>Both RL methods make the model more concise.</strong><br>The base model averages about 297 output tokens, while PPO and GRPO average around 159 and 153 tokens. This conciseness emerges even though the reward only scores correctness, likely because the bounded response length implicitly penalizes rambling answers that fail to reach a final answer.</p>
+</li>
+</ol>
+<p>Overall, this experiment suggests that for small LLMs on verifiable math reasoning tasks, <strong>GRPO is a strong low-cost alternative to PPO</strong>. It removes the critic, reduces training cost, and still obtains almost the same accuracy improvement over the base model.</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>PPO vs GRPO — Post-Training Qwen2.5-0.5B-Instruct on GSM8K with veRL</p><p><a href="http://gong208.github.io/2026/06/10/2026-06-10-PPOTraining/">http://gong208.github.io/2026/06/10/2026-06-10-PPOTraining/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Jiangshan Gong</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2026-06-10</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2026-07-01</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/RL/">RL</a><a class="link-muted mr-2" rel="tag" href="/tags/LLM/">LLM</a><a class="link-muted mr-2" rel="tag" href="/tags/PPO/">PPO</a><a class="link-muted mr-2" rel="tag" href="/tags/GRPO/">GRPO</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2026/06/29/2026-06-29-SlimeSearchR1Example/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">2026-06-29-SlimeSearchR1Example</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2026/06/07/2026-06-07-RLClassic/"><span class="level-item">2026-06-07-RLClassic</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><script src="https://utteranc.es/client.js" repo="gong208/gong208.github.io" issue-term="pathname" label="comment" theme="github-light" crossorigin="anonymous" async></script></div></div></div><div class="column column-left is-3-tablet is-3-desktop is-3-widescreen  order-1"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-29T10:27:06.000Z">2026-06-29</time></p><p class="title"><a href="/2026/06/29/2026-06-29-QWenVL/">2026-06-29-QWenVL</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-29T09:17:57.000Z">2026-06-29</time></p><p class="title"><a href="/2026/06/29/2026-06-29-SlimeSearchR1Example/">2026-06-29-SlimeSearchR1Example</a></p><p class="categories"><a href="/categories/Study-Experiment/">Study Experiment</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-10T02:06:17.000Z">2026-06-10</time></p><p class="title"><a href="/2026/06/10/2026-06-10-PPOTraining/">PPO vs GRPO — Post-Training Qwen2.5-0.5B-Instruct on GSM8K with veRL</a></p><p class="categories"><a href="/categories/Study-Experiment/">Study Experiment</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-07T02:06:17.000Z">2026-06-07</time></p><p class="title"><a href="/2026/06/07/2026-06-07-RLClassic/">2026-06-07-RLClassic</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-06T02:06:17.000Z">2026-06-06</time></p><p class="title"><a href="/2026/06/06/2026-06-06-RLPre/">2026-06-06-RLPre</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Life/"><span class="level-start"><span class="level-item">Life</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/Research-Experiment/"><span class="level-start"><span class="level-item">Research Experiment</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Study/"><span class="level-start"><span class="level-item">Study</span></span><span class="level-end"><span class="level-item tag">15</span></span></a></li><li><a class="level is-mobile" href="/categories/Study-Experiment/"><span class="level-start"><span class="level-item">Study Experiment</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Why-Compare-PPO-and-GRPO"><span class="level-left"><span class="level-item">1</span><span class="level-item">Why Compare PPO and GRPO?</span></span></a></li><li><a class="level is-mobile" href="#Training-and-Evaluation-Setup"><span class="level-left"><span class="level-item">2</span><span class="level-item">Training and Evaluation Setup</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Experiment-Setup"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">Experiment Setup</span></span></a></li><li><a class="level is-mobile" href="#Evaluation-Protocol"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">Evaluation Protocol</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Results"><span class="level-left"><span class="level-item">3</span><span class="level-item">Results</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Accuracy-Results"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">Accuracy Results</span></span></a></li><li><a class="level is-mobile" href="#Training-Cost-Results"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">Training Cost Results</span></span></a></li><li><a class="level is-mobile" href="#Memory-Results"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">Memory Results</span></span></a></li><li><a class="level is-mobile" href="#Inference-Profile"><span class="level-left"><span class="level-item">3.4</span><span class="level-item">Inference Profile</span></span></a></li><li><a class="level is-mobile" href="#Qualitative-Result"><span class="level-left"><span class="level-item">3.5</span><span class="level-item">Qualitative Result</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Base-model-output"><span class="level-left"><span class="level-item">3.5.1</span><span class="level-item">Base model output</span></span></a></li><li><a class="level is-mobile" href="#PPO-model-output"><span class="level-left"><span class="level-item">3.5.2</span><span class="level-item">PPO model output</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#Discussion"><span class="level-left"><span class="level-item">4</span><span class="level-item">Discussion</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Why-This-Setting-Favors-GRPO"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">Why This Setting Favors GRPO</span></span></a></li><li><a class="level is-mobile" href="#Limitations"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">Limitations</span></span></a></li><li><a class="level is-mobile" href="#Takeaways"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">Takeaways</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Jiangshan&#039;s Personal Website" height="28"></a><p class="is-size-7"><span>&copy; 2026 Jiangshan Gong</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mhchem.min.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

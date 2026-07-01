@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>2026-06-29-SlimeSearchR1Example - Jiangshan&#039;s Personal Website</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Jiangshan&#039;s Personal Website"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Jiangshan&#039;s Personal Website"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Training and evaluation of the slime Search-R1-trained Qwen2.5-3B model on NQ and HotpotQA."><meta property="og:type" content="blog"><meta property="og:title" content="2026-06-29-SlimeSearchR1Example"><meta property="og:url" content="http://gong208.github.io/2026/06/29/2026-06-29-SlimeSearchR1Example/"><meta property="og:site_name" content="Jiangshan&#039;s Personal Website"><meta property="og:description" content="Training and evaluation of the slime Search-R1-trained Qwen2.5-3B model on NQ and HotpotQA."><meta property="og:locale" content="en_US"><meta property="og:image" content="http://gong208.github.io/2026/06/29/2026-06-29-SlimeSearchR1Example/eval_score.png"><meta property="og:image" content="http://gong208.github.io/2026/06/29/2026-06-29-SlimeSearchR1Example/respons_len.png"><meta property="article:published_time" content="2026-06-29T09:17:57.000Z"><meta property="article:modified_time" content="2026-07-01T08:22:20.490Z"><meta property="article:author" content="Jiangshan Gong"><meta property="article:tag" content="slime"><meta property="article:tag" content="search-r1"><meta property="article:tag" content="qwen2.5-3B"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://gong208.github.io/2026/06/29/2026-06-29-SlimeSearchR1Example/eval_score.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://gong208.github.io/2026/06/29/2026-06-29-SlimeSearchR1Example/"},"headline":"Jiangshan Gong","image":["http://gong208.github.io/2026/06/29/2026-06-29-SlimeSearchR1Example/eval_score.png","http://gong208.github.io/2026/06/29/2026-06-29-SlimeSearchR1Example/respons_len.png"],"datePublished":"2026-06-29T09:17:57.000Z","dateModified":"2026-07-01T08:22:20.490Z","author":{"@type":"Person","name":"Jiangshan Gong"},"publisher":{"@type":"Organization","name":"Jiangshan's Personal Website","logo":{"@type":"ImageObject","url":"http://gong208.github.io/img/logo.svg"}},"description":"This is Jiangshan Gong&#39;s personal website"}</script><link rel="canonical" href="http://gong208.github.io/2026/06/29/2026-06-29-SlimeSearchR1Example/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Jiangshan&#039;s Personal Website" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/Blog">Blog</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/About">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-9-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2026-06-29T09:17:57.000Z" title="6/29/2026, 5:17:57 PM">2026-06-29</time></span><span class="level-item">Updated&nbsp;<time dateTime="2026-07-01T08:22:20.490Z" title="7/1/2026, 4:22:20 PM">2026-07-01</time></span><span class="level-item"><a class="link-muted" href="/categories/Study-Experiment/">Study Experiment</a></span><span class="level-item">6 minutes read (About 918 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">2026-06-29-SlimeSearchR1Example</h1><div class="content"><h1 id="Search-R1-on-slime-Training-a-Qwen2-5-3B-Search-Agent"><a href="#Search-R1-on-slime-Training-a-Qwen2-5-3B-Search-Agent" class="headerlink" title="Search-R1 on slime: Training a Qwen2.5-3B Search Agent"></a>Search-R1 on slime: Training a Qwen2.5-3B Search Agent</h1><p>This post walks through a full Search-R1 run on <a target="_blank" rel="noopener" href="https://github.com/THUDM/slime">slime</a>: RL-training a Qwen2.5-3B base model to use a retrieval tool on open-domain QA, then evaluating it against the pre-RL base on the NQ and HotpotQA test sets.<br>The short version: 3000 GRPO steps roughly <strong>triple</strong> NQ exact-match and lift HotpotQA by ~3.4×, and the qualitative logs shows that thRL teaches the model to search and ground its answers instead of guessing from memory.</p>
+<h2 id="The-task"><a href="#The-task" class="headerlink" title="The task"></a>The task</h2><p>Search-R1 frames open-domain QA as a multi-turn <strong>agentic</strong> loop. The model reasons, optionally emits a search query, reads the retrieved passages, and commits to a final answer all in one structured protocol of:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;think&gt; … &lt;/think&gt;</span><br><span class="line">&lt;search&gt; query &lt;/search&gt;            # optional, can repeat</span><br><span class="line">&lt;information&gt; Doc 1 … Doc 2 … Doc 3 &lt;/information&gt;   # injected by the env</span><br><span class="line">&lt;answer&gt; final answer &lt;/answer&gt;</span><br></pre></td></tr></table></figure>
+
+<p>slime runs this through a <strong>custom generate function</strong> (<a target="_blank" rel="noopener" href="https://github.com/gong208/slime/blob/ac68569b2be4f6a240075863ed7815a166b6af87/examples/search-r1/generate_with_search.py#L145"><code>generate_with_search.generate</code></a>) that interleaves sglang generation with live retrieval calls. Per the config in that file, each rollout allows <strong>max 2 search turns</strong> and returns <strong>top-3 docs&#x2F;turn</strong> from a local dense retriever. The reward is computed by <a target="_blank" rel="noopener" href="https://github.com/gong208/slime/blob/main/examples/search-r1/qa_em_format.py"><code>generate_with_search.reward_func</code></a>, which is the pure <strong>exact match</strong> of the extracted <code>&lt;answer&gt;</code> against the gold answers.</p>
+<h2 id="Training-process"><a href="#Training-process" class="headerlink" title="Training process"></a>Training process</h2><h3 id="Recipe-at-a-glance"><a href="#Recipe-at-a-glance" class="headerlink" title="Recipe at a glance"></a>Recipe at a glance</h3><table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Choice</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Algorithm</td>
+<td>GRPO (<code>--advantage-estimator grpo</code>)</td>
+</tr>
+<tr>
+<td>Base model</td>
+<td>Qwen2.5-3B (also the KL ref)</td>
+</tr>
+<tr>
+<td>Reward</td>
+<td>Exact match</td>
+</tr>
+<tr>
+<td>Training data</td>
+<td><code>nq_hotpotqa_train/train.parquet</code> (mixed NQ + HotpotQA)</td>
+</tr>
+<tr>
+<td>Rollout steps</td>
+<td>3000 (<code>--num-rollout 3000</code>)</td>
+</tr>
+<tr>
+<td>Prompts &#x2F; step</td>
+<td>32 (<code>--rollout-batch-size 32</code>)</td>
+</tr>
+<tr>
+<td>Samples &#x2F; prompt</td>
+<td>8 (<code>--n-samples-per-prompt 8</code>) → 256 trajectories&#x2F;step</td>
+</tr>
+<tr>
+<td>Global batch size</td>
+<td>256</td>
+</tr>
+<tr>
+<td>Max response length</td>
+<td>512 tokens (<code>--rollout-max-response-len 512</code>)</td>
+</tr>
+<tr>
+<td>Rollout temperature</td>
+<td>1.0 (exploration during training)</td>
+</tr>
+<tr>
+<td>Optimizer</td>
+<td>Adam, lr 1e-6 constant, wd 0.01, β&#x3D;(0.9, 0.98)</td>
+</tr>
+<tr>
+<td>KL</td>
+<td>low-var KL to ref, coef 1e-3</td>
+</tr>
+<tr>
+<td>Entropy bonus</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>PPO clip</td>
+<td>0.2 &#x2F; <strong>0.28 high</strong> (clip-higher)</td>
+</tr>
+<tr>
+<td>TIS</td>
+<td>on</td>
+</tr>
+</tbody></table>
+<h3 id="Training-logs"><a href="#Training-logs" class="headerlink" title="Training logs"></a>Training logs</h3><table>
+<thead>
+<tr>
+<th align="center">Reward curve</th>
+<th align="center">Response length</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><img src="/2026/06/29/2026-06-29-SlimeSearchR1Example/eval_score.png" class="" title="Training reward curve"></td>
+<td align="center"><img src="/2026/06/29/2026-06-29-SlimeSearchR1Example/respons_len.png" class="" title="Response length over training"></td>
+</tr>
+</tbody></table>
+<p>The model learns to emit effective response with stable response length.</p>
+<h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>Eval re-uses the exact training generation&#x2F;reward path with <strong>greedy decoding</strong> (<code>--eval-temperature 0</code>) and 1 sample per question. The merged <code>test.parquet</code> is split by <code>data_source</code> into:</p>
+<ul>
+<li>NQ — <code>nq_test.parquet</code>, 3,610 questions</li>
+<li>HotpotQA — <code>hotpotqa_test.parquet</code>, 7,405 questions</li>
+</ul>
+<h3 id="Headline"><a href="#Headline" class="headerlink" title="Headline"></a>Headline</h3><table>
+<thead>
+<tr>
+<th>Model</th>
+<th align="right">NQ EM</th>
+<th align="right">HotpotQA EM</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Qwen2.5-3B base</td>
+<td align="right">0.1620</td>
+<td align="right">0.0984</td>
+</tr>
+<tr>
+<td>Qwen2.5-3B Search-R1 RL for 3000 steps</td>
+<td align="right"><strong>0.4576</strong></td>
+<td align="right"><strong>0.3381</strong></td>
+</tr>
+<tr>
+<td><strong>Δ (RL gain)</strong></td>
+<td align="right"><strong>+0.2956</strong></td>
+<td align="right"><strong>+0.2397</strong></td>
+</tr>
+</tbody></table>
+<p>RL training roughly <strong>triples</strong> NQ EM and lifts HotpotQA EM by ~3.4×.</p>
+<h3 id="Metric-definition"><a href="#Metric-definition" class="headerlink" title="Metric definition"></a>Metric definition</h3><p>The score is <strong>Exact Match (EM)</strong> as implemented in <a href="qa_em_format.py"><code>qa_em_format.py</code></a> → <code>compute_score_em</code>:</p>
+<ul>
+<li>Extract the model’s final <code>&lt;answer&gt;…&lt;/answer&gt;</code>.</li>
+<li>Normalize (lowercase, strip punctuation, drop articles a&#x2F;an&#x2F;the, collapse whitespace as in SQuAD&#x2F;DPR normalization).</li>
+<li>Score &#x3D; <strong>1.0</strong> if it exactly equals any gold answer, else <strong>0.0</strong>.</li>
+</ul>
+<h3 id="Qualitative-comparison"><a href="#Qualitative-comparison" class="headerlink" title="Qualitative comparison"></a>Qualitative comparison</h3><h4 id="Trained-model-—-uses-the-search-tool-grounds-the-answer"><a href="#Trained-model-—-uses-the-search-tool-grounds-the-answer" class="headerlink" title="Trained model — uses the search tool, grounds the answer"></a>Trained model — uses the search tool, grounds the answer</h4><p>Question: <em>“who sings the rap in baby by justin bieber?”</em> (gold: <strong>Ludacris</strong>)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;think&gt;&lt;search&gt;who sings the rap in baby by justin bieber&lt;/search&gt;</span><br><span class="line">&lt;information&gt;</span><br><span class="line">  Doc 1 (Baby (Justin Bieber song)): …written by Bieber with Christopher &quot;Tricky&quot;</span><br><span class="line">  Stewart and Terius &quot;The-Dream&quot; Nash … and also by R&amp;B singer Christina Milian</span><br><span class="line">  and labelmate, rapper Ludacris…</span><br><span class="line">  Doc 2 … Doc 3 …commended Ludacris&#x27; part…</span><br><span class="line">&lt;/information&gt;</span><br><span class="line">&lt;answer&gt; Ludacris &lt;/answer&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Extracted “Ludacris” &#x3D; gold. <strong>EM &#x3D; 1.</strong> complete search → read → answer with ~40 tokens.</p>
+<h4 id="Base-model-—-two-typical-failure-modes"><a href="#Base-model-—-two-typical-failure-modes" class="headerlink" title="Base model — two typical failure modes"></a>Base model — two typical failure modes</h4><p><strong>Mode 1 — answers from memory, never searches (often wrong):</strong><br>Question: <em>“who sings song at the end of beauty and the beast?”</em> (gold: <strong>Josh Groban</strong>)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;|im_start|&gt;assistant I found the answer to your question! The song at the end of</span><br><span class="line">Beauty and the Beast is sung by Celine Dion. &lt;answer&gt; Celine Dion &lt;/answer&gt;</span><br></pre></td></tr></table></figure>
+
+<p>No <code>&lt;search&gt;</code>. Confidently wrong. <strong>EM &#x3D; 0.</strong></p>
+<p><strong>Mode 2 — doesn’t answer, echoes the instructions (degenerate):</strong><br>Question: (gold: <strong>Kentucky</strong>)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;|im_start|&gt;assistant I will conduct reasoning inside &lt;think&gt; and &lt;/think&gt; first.</span><br><span class="line">I will search for the information if I find that I lack any knowledge. I will</span><br><span class="line">provide the answer inside &lt;answer&gt; and &lt;/answer&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Never searches, never answers; scorer extracts a stray “and”. <strong>EM &#x3D; 0.</strong></p>
+<h4 id="What-the-contrast-shows"><a href="#What-the-contrast-shows" class="headerlink" title="What the contrast shows"></a>What the contrast shows</h4><table>
+<thead>
+<tr>
+<th></th>
+<th>Base</th>
+<th>Trained</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Uses <code>&lt;search&gt;</code> tool</td>
+<td>Rarely &#x2F; never</td>
+<td>Yes, reflexively</td>
+</tr>
+<tr>
+<td>Grounds answer in retrieved docs</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Output style</td>
+<td>Rambles &#x2F; echoes prompt</td>
+<td>Concise: search → read → answer (~37 tokens)</td>
+</tr>
+<tr>
+<td>Typical result</td>
+<td>Memorized guess or malformed</td>
+<td>Retrieved, correct</td>
+</tr>
+</tbody></table>
+<p>The lesson the EM reward actually taught is the <strong>agentic behavior</strong>: on a factual question, issue a search, read the passages, and extract the answer in the <code>&lt;think&gt;/&lt;search&gt;/&lt;information&gt;/&lt;answer&gt;</code> protocol. The base model has the same underlying knowledge but doesn’t invoke the tool or follow the format, so it guesses from memory (Mode 1) or parrots the prompt (Mode 2).<br>Also note that the <code>&lt;/think&gt;</code> is absent from the trained model’s answer, this is because we use pure exact match as the reward and during training the policy learned that reasoning tokens and the <code>&lt;/think&gt;</code> close-tag earn nothing. To make the answer more format-valid, we should give some weight to <a target="_blank" rel="noopener" href="https://github.com/THUDM/slime/blob/6a0ee15881cba74c2ef57a3a671024621ce64bf4/examples/search-r1/qa_em_format.py#L156">structure_format_score</a>.</p>
+<h2 id="Reproduce"><a href="#Reproduce" class="headerlink" title="Reproduce"></a>Reproduce</h2><p>Follow the <a target="_blank" rel="noopener" href="https://github.com/gong208/slime/tree/main/examples/search-r1">github repo</a> to reproduce the experiment. I setup the local retriever on the host using a conda environment and ran the slime search-r1 training script in the slimerl:slime docker image.</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>2026-06-29-SlimeSearchR1Example</p><p><a href="http://gong208.github.io/2026/06/29/2026-06-29-SlimeSearchR1Example/">http://gong208.github.io/2026/06/29/2026-06-29-SlimeSearchR1Example/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Jiangshan Gong</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2026-06-29</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2026-07-01</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/slime/">slime</a><a class="link-muted mr-2" rel="tag" href="/tags/search-r1/">search-r1</a><a class="link-muted mr-2" rel="tag" href="/tags/qwen2-5-3B/">qwen2.5-3B</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2026/06/29/2026-06-29-QWenVL/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">2026-06-29-QWenVL</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2026/06/10/2026-06-10-PPOTraining/"><span class="level-item">PPO vs GRPO — Post-Training Qwen2.5-0.5B-Instruct on GSM8K with veRL</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><script src="https://utteranc.es/client.js" repo="gong208/gong208.github.io" issue-term="pathname" label="comment" theme="github-light" crossorigin="anonymous" async></script></div></div></div><div class="column column-left is-3-tablet is-3-desktop is-3-widescreen  order-1"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-29T10:27:06.000Z">2026-06-29</time></p><p class="title"><a href="/2026/06/29/2026-06-29-QWenVL/">2026-06-29-QWenVL</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-29T09:17:57.000Z">2026-06-29</time></p><p class="title"><a href="/2026/06/29/2026-06-29-SlimeSearchR1Example/">2026-06-29-SlimeSearchR1Example</a></p><p class="categories"><a href="/categories/Study-Experiment/">Study Experiment</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-10T02:06:17.000Z">2026-06-10</time></p><p class="title"><a href="/2026/06/10/2026-06-10-PPOTraining/">PPO vs GRPO — Post-Training Qwen2.5-0.5B-Instruct on GSM8K with veRL</a></p><p class="categories"><a href="/categories/Study-Experiment/">Study Experiment</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-07T02:06:17.000Z">2026-06-07</time></p><p class="title"><a href="/2026/06/07/2026-06-07-RLClassic/">2026-06-07-RLClassic</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2026-06-06T02:06:17.000Z">2026-06-06</time></p><p class="title"><a href="/2026/06/06/2026-06-06-RLPre/">2026-06-06-RLPre</a></p><p class="categories"><a href="/categories/Study/">Study</a></p></div></article></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Life/"><span class="level-start"><span class="level-item">Life</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/Research-Experiment/"><span class="level-start"><span class="level-item">Research Experiment</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Study/"><span class="level-start"><span class="level-item">Study</span></span><span class="level-end"><span class="level-item tag">15</span></span></a></li><li><a class="level is-mobile" href="/categories/Study-Experiment/"><span class="level-start"><span class="level-item">Study Experiment</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Search-R1-on-slime-Training-a-Qwen2-5-3B-Search-Agent"><span class="level-left"><span class="level-item">1</span><span class="level-item">Search-R1 on slime: Training a Qwen2.5-3B Search Agent</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#The-task"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">The task</span></span></a></li><li><a class="level is-mobile" href="#Training-process"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">Training process</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Recipe-at-a-glance"><span class="level-left"><span class="level-item">1.2.1</span><span class="level-item">Recipe at a glance</span></span></a></li><li><a class="level is-mobile" href="#Training-logs"><span class="level-left"><span class="level-item">1.2.2</span><span class="level-item">Training logs</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Evaluation"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">Evaluation</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Headline"><span class="level-left"><span class="level-item">1.3.1</span><span class="level-item">Headline</span></span></a></li><li><a class="level is-mobile" href="#Metric-definition"><span class="level-left"><span class="level-item">1.3.2</span><span class="level-item">Metric definition</span></span></a></li><li><a class="level is-mobile" href="#Qualitative-comparison"><span class="level-left"><span class="level-item">1.3.3</span><span class="level-item">Qualitative comparison</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Reproduce"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">Reproduce</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Jiangshan&#039;s Personal Website" height="28"></a><p class="is-size-7"><span>&copy; 2026 Jiangshan Gong</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mhchem.min.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
